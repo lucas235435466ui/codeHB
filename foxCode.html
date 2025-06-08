@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Coding Fox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Poppins", "sans-serif";
+            background-color: #dfdbdb;
+            margin: 0;
+            padding: 0;
+             background-image: url('https://media.publit.io/file/China-night.png');
+              background-size: cover; 
+        }
+
+        #divStart {
+            background-image: url("https://media.publit.io/file/Hills-and-mountains-night.png");
+            background-size: cover;
+            width: 100%;
+            height: 955px;
+        }
+
+        .btnDivStart {
+            width: 12%;
+            height: 45px;
+            border-radius: 12px;
+            border: none;
+            transition: all ease 0.3s;
+            font-size: 20px;
+
+        }
+
+        @keyframes moveUp {
+           0% {
+             transform: translateY(0);
+           }
+           50% {
+             transform: translateY(25px);
+           }
+           100% {
+             transform: translateY(0);
+           }
+        }
+
+        #tutorialBtn:hover {
+            transform: scale(1.05);
+            border: 1px solid white !important;
+            
+        }
+
+
+        #codeInp1::placeholder {
+            color: rgba(0, 0, 0, 0.76);
+            font-weight: 500;
+        }
+
+        #runCodeBtn1:hover {
+            transform: scale(1.15) !important;
+            background-color: rgb(74, 204, 62) !important;
+            cursor: pointer;
+        }
+        
+        .backgroundCellDiv, .wallCellDiv {
+            width: 100%;
+            height: 100%;
+            border: 0.1px solid rgba(0, 0, 0, 0.377);
+            box-sizing: border-box;
+        }	
+    </style>
+</head>
+<body>
+    <div id="divStart">
+       <h2 style="color: white; font-size: 65px; margin-top: 310px; position: absolute; left: 35%; font-family: 'none', serif;
+       "> START GAME</h2>
+        <img style="filter: brightness(640%); position: absolute; margin-left: 630px; margin-top: 150px;" src="https://images.vexels.com/media/users/3/132477/isolated/preview/3b36d6c1705c1902d34a84ba17ee531d-tiny-lines-dots-divider.png" alt="">
+        <p onclick="this.parentElement.style.display = 'none'; fullContainer1.style.display = 'grid'" style="color: white; font-size: 30px; font-family: 'none';  margin-left: 780px;
+         margin-top: 485px; position: absolute; font-weight: 300; letter-spacing: 1.5px; animation: moveUp 6s infinite; cursor: pointer;">TAP TO BEGIN</p>
+   
+
+        <button onclick="tutorialDiv.style.display = 'block'" id="tutorialBtn" style="transition: 0.3s ease all; border: 1px solid rgba(255, 255, 255, 0.514); border-radius: 4px; background-color: #21212be7; color: rgba(250, 243, 228, 0.856);
+        width: 20%; height: 60px; font-size: 25px; font-weight: 600; letter-spacing: 2px; margin-left: 700px; margin-top: 700px;
+         font-family: 'Poppins', 'sans-serif'; cursor: pointer;"> Tutorial</button>
+    </div>
+
+
+    <div style="width: 28%; height: 650px; position: absolute; background-color: rgb(26, 26, 26); margin-top: -740px; margin-left: 650px;
+     padding-left: 15px; box-shadow: black 7px 12px 31px 8px; display: none;" id="tutorialDiv">
+        <button onclick="this.parentElement.style.display = 'none'" style="color: white; background-color: red; border-radius: 100%; border: none; position: absolute; width: 25px; height: 25px; margin-left: 515px; 
+        margin-top: -10px; font-size: 18px; cursor: pointer;"> X</button>
+        <p style="color: white; margin-top: 50px; margin-left: 15px;"> This is a game to learn coding, and functions.</p>
+        <p style="color: white; margin-top: 40px; margin-left: 15px; font-size: 23px; font-weight: 600;"> What is a function?</p>
+         <p style="color: white; margin-top: -10px; margin-left: 40px; max-width: 400px;"> A function is a block of code that performs a specific task. It's only executed when it is
+             <span style="font-weight: bold; "><i>called</i></span></p>
+
+             <p style="color: white; margin-top: 40px; margin-left: 15px; font-size: 23px; font-weight: 600;"> How to call a function?</p>
+         <p style="color: white; margin-top: -10px; margin-left: 40px; max-width: 400px;">All functions have different names. To call the function, you only have to put the function's name along with ().
+            <i>eg: moveLeft() <span style="color: #3b4938e7;"> ///Will execute the function called "moveLeft"</span></i> </p>
+
+                   <p style="color: white; margin-top: 40px; margin-left: 15px; font-size: 23px; font-weight: 600;"> What functions exist in the game?</p>
+         <p style="color: white; margin-top: -10px; margin-left: 40px; max-width: 400px;">The basics are: <span style="color: rgb(183, 204, 199);">step() turnRight() turnLeft() turnTop() turnBottom()</span>. There will be more as the game proceeds </p>
+            
+          
+        </div>
+
+
+    <div id="fullContainer1" style="display: none; grid-template-columns: 1fr 1fr; height: 950px; width: 50%; background-color: rgb(0, 0, 0); height: 700px; 
+    margin-left: 480px; margin-top: 100px; box-shadow: black 5px 5px 25px;" >
+        <div id="map1" style="width: 119.8%; background-color: rgb(85, 161, 78); display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); " >
+       
+        </div>
+        <div id="code1" style="width: 80%; background-color: rgb(218, 218, 218); margin-left: 20%; " >
+            <div style="width: 100%; height: 100px; background-color: rgb(192, 192, 192); overflow-x: scroll;  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; overflow-y: hidden; ">
+              
+              <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); 
+               height: 55px; cursor: pointer; ">
+                 <img style="width: 80%; margin-left: 7px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Paw_%28Animal_Rights_symbol%29.svg/768px-Paw_%28Animal_Rights_symbol%29.svg.png" alt="">
+                 <p style="color: rgb(19, 87, 58); margin-top: -15px; text-align: center; font-weight: 500;"> step</p>
+               </div>
+
+                <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                 <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/21/21112.png" alt="">
+                 <p style="color: rgb(19, 87, 58); margin-top: -10px; text-align: center; font-weight: 500;"> turnLeft</p>
+               </div>
+
+                    <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                 <img style="width: 75%; margin-left: 7px;" src="https://www.svgrepo.com/show/62915/curve-arrow-pointing-right.svg" alt="">
+                 <p style="color: rgb(19, 87, 58); margin-top: -10px;  font-weight: 500; font-size: 15px ; margin-left: -5px;"> turnRight</p>
+               </div>
+
+                  <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                 <img style="width: 75%; margin-left: 7px;" src="https://cdn1.iconfinder.com/data/icons/ios-and-android-glyphs-set-4/52/up__curved__direction__arrow-512.png" alt="">
+                 <p style="color: rgb(19, 87, 58); margin-top: -10px; text-align: center; font-weight: 500;"> turnUp</p>
+               </div>
+
+                <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                 <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/21/21178.png" alt="">
+                 <p style="color: rgb(19, 87, 58); margin-top: -10px; font-weight: 500;  font-size: 15px ; margin-left: -5px;"> turnDown</p>
+               </div>
+            </div>
+
+            <input id="codeInp1" placeholder="Code" type="text" style="width: 65%; height: 40px;  border-radius: 8px; border: 1px solid black; 
+            margin-left: 10px; margin-top: 20px ; padding-left: 10px; font-family: 'Poppins', 'sans-serif'; letter-spacing: 0.7px;">
+
+             <button onclick="addLineToCode()" style="background-color: #5add81; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black;
+             font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; margin-left: 25px; cursor: pointer; "> ADD</button>
+
+
+             <textarea  style="resize: none; width: 96.5%; height: 440px;  margin-top: 20px; padding-left: 5px; font-size: 16px;" id="textarea"></textarea>
+             <button onclick="runCodeFn()" id="runCodeBtn1" style="border-radius: 8px; background-color: rgb(47, 212, 135); color: white; font-family: 'Poppins', 'sans-serif';
+             border: none; width: 25%; height: 35px; transform: scale(1.1); font-size: 18px; letter-spacing: 0.7px; margin-left: 135px; margin-top: 5px;
+             transition: all 0.3s ease;">RUN</button>
+             <p style="font-size: 13px; color: rgb(85, 85, 85); position: absolute; margin-top: -1px; margin-left: 143px;  "> CTRL + ENTER</p>
+        </div>
+    </div>
+
+    <script>
+
+    let codeGlossary = {
+        step: "step()",
+        left: "turnLeft()",
+        right: "turnRight()",
+        up: "turnUp()",
+        down: "turnDown()"
+
+    }
+
+    function addLineToCode() {
+        document.getElementById("textarea").value =  document.getElementById("textarea").value + "\n"  + document.getElementById("codeInp1").value ;
+        document.getElementById("codeInp1").value = "";
+    }
+
+
+        const rightBorder = [7, 15, 23, 31, 39, 47, 55, 63];
+        const leftBorder = [0, 8, 16, 24, 32, 40, 48, 56];
+        const topBorder = [0, 1, 2, 3, 4, 5, 6, 7];
+        const bottomBorder = [56, 57, 58, 59, 60, 61, 62, 63];
+
+        const validValues = [...rightBorder, ...leftBorder, ...topBorder, ...bottomBorder];
+    let amountsCellsAdd = 0
+    document.getElementById("map1").addEventListener("click", () => {
+        if(amountsCellsAdd == 0) {
+        for(let i = 0; i < 64; i++) {  
+            let divNode = document.createElement("div")
+            divNode.setAttribute("class", "backgroundCellDiv")
+            if(i == 60) {
+                divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
+            }
+            if( validValues.includes(i)) {
+                divNode.setAttribute("class", "wallCellDiv")
+            }
+             map1.appendChild(divNode);
+        }
+        }
+        amountsCellsAdd++
+    })
+  
+    function runCodeFn() {
+        let codeLines = document.getElementById("textarea").value.split("\n");
+        let currentPosition = 60; // Starting position of the fox
+        hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+        
+        for(let i = 0; i < codeLines.length; i++) {
+           setTimeout(() => {
+             let codeLine = codeLines[i].trim();
+            if(codeLine.trim() === codeGlossary.left) {
+                hbImg1.style.transform = "scale(0.15) rotate(-90deg)";
+            }
+            else if(codeLine.trim() === codeGlossary.right) {
+                hbImg1.style.transform = "scale(0.15) rotate(90deg)";
+            }
+            else if(codeLine.trim() === codeGlossary.down) {
+                hbImg1.style.transform = "scale(0.15) rotate(180deg)";
+            }
+            else if(codeLine.trim() === codeGlossary.up) {
+                hbImg1.style.transform = "scale(0.15) rotate(0deg)";
+            }
+            else if(codeLine.trim() === codeGlossary.step) {
+                if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
+                    if( !leftBorder.includes(currentPosition)) {
+                         currentPosition = currentPosition - 1;
+                    hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) - 70) + "px"
+                    }
+
+                   
+                }
+                else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
+                    if( !rightBorder.includes(currentPosition)) {
+         
+                        currentPosition = currentPosition + 1
+                        hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
+                    }
+                }
+                else if(hbImg1.style.transform == "scale(0.15) rotate(180deg)") {
+                    if(!bottomBorder.includes(currentPosition)) {
+                        alert(currentPosition)
+                        currentPosition = currentPosition + 8
+                        hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) + 87) + "px"
+                    }                    
+                }
+                else if(hbImg1.style.transform == "scale(0.15) rotate(0deg)") {
+                    if(!topBorder.includes(currentPosition)) {
+                        currentPosition = currentPosition - 8
+                        hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                    }
+                }
+                
+                
+              
+            }
+
+           }, i * 350);
+        }
+    }
+
+   
+  </script>
+</body>
+</html>
