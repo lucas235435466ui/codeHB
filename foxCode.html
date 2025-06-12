@@ -3,9 +3,8 @@
 <head>
     <title>The Coding Fox</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: "Poppins", "sans-serif";
@@ -69,14 +68,91 @@
             border: 0.1px solid rgba(0, 0, 0, 0.377);
             box-sizing: border-box;
         }	
+
+        .playBtn {
+            width: 7%;
+            height: 37px;
+            background-color: #5add81;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            margin-top: 130px;
+            margin-left: 44px;
+            position: absolute;
+            transition: 0.3s ease all;
+        }
+
+        .playBtn:hover {
+            transform: scale(1.05);
+            background-color: #44b363 !important;
+            cursor: pointer;
+        }
+
+
+        .levelText {
+            font-size: 30px;
+            font-weight: 600;
+            color: rgb(0, 0, 0);
+            margin-top: 55px;
+            margin-left: 25px;
+            position: absolute;
+            font-family: "Fontdiner Swanky", serif;
+            letter-spacing: 6px;
+            font-weight: 500;
+        }
+
+        #nextBtn1:hover, #nextBtn2:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+            background-color: #534c94 !important;
+        }
+        #nextBtn1, #nextBtn2 {
+            transition: 0.3s ease all;
+        }
+
+
+
+        #dialogText1 {
+            animation: op 4s forwards;
+            
+                
+        }
+
+        @keyframes op {
+            from {
+                opacity: 0;
+                
+            }
+            to {
+               opacity: 1;
+            }
+        }
+
+        .buglingImg {
+            animation: buglingG 2s infinite;
+        }
+
+        @keyframes buglingG {
+            0% {
+                transform: scale(0.12);
+            }
+            50% {
+                transform: scale(0.14);
+            }
+            100% {
+                transform: scale(0.12);
+            }
+        }
+
     </style>
 </head>
 <body>
-    <div id="divStart">
+    <div style="display: block;" id="divStart">
        <h2 style="color: white; font-size: 65px; margin-top: 310px; position: absolute; left: 35%; font-family: 'none', serif;
        "> START GAME</h2>
         <img style="filter: brightness(640%); position: absolute; margin-left: 630px; margin-top: 150px;" src="https://images.vexels.com/media/users/3/132477/isolated/preview/3b36d6c1705c1902d34a84ba17ee531d-tiny-lines-dots-divider.png" alt="">
-        <p onclick="this.parentElement.style.display = 'none'; fullContainer1.style.display = 'grid'" style="color: white; font-size: 30px; font-family: 'none';  margin-left: 780px;
+        <p onclick="levelsDivDisplay()" style="color: white; font-size: 30px; font-family: 'none';  margin-left: 780px;
          margin-top: 485px; position: absolute; font-weight: 300; letter-spacing: 1.5px; animation: moveUp 6s infinite; cursor: pointer;">TAP TO BEGIN</p>
    
 
@@ -108,34 +184,35 @@
 
     <div id="fullContainer1" style="display: none; grid-template-columns: 1fr 1fr; height: 950px; width: 50%; background-color: rgb(0, 0, 0); height: 700px; 
     margin-left: 480px; margin-top: 100px; box-shadow: black 5px 5px 25px;" >
+    
         <div id="map1" style="width: 119.8%; background-color: rgb(85, 161, 78); display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); " >
        
         </div>
         <div id="code1" style="width: 80%; background-color: rgb(218, 218, 218); margin-left: 20%; " >
             <div style="width: 100%; height: 100px; background-color: rgb(192, 192, 192); overflow-x: scroll;  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; overflow-y: hidden; ">
               
-              <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); 
+              <div onclick="textarea.value += '\n' + 'step()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); 
                height: 55px; cursor: pointer; ">
                  <img style="width: 80%; margin-left: 7px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Paw_%28Animal_Rights_symbol%29.svg/768px-Paw_%28Animal_Rights_symbol%29.svg.png" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -15px; text-align: center; font-weight: 500;"> step</p>
                </div>
 
-                <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                <div onclick="textarea.value += '\n' + 'turnLeft()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
                  <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/21/21112.png" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -10px; text-align: center; font-weight: 500;"> turnLeft</p>
                </div>
 
-                    <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                    <div onclick="textarea.value += '\n' + 'turnRight()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
                  <img style="width: 75%; margin-left: 7px;" src="https://www.svgrepo.com/show/62915/curve-arrow-pointing-right.svg" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -10px;  font-weight: 500; font-size: 15px ; margin-left: -5px;"> turnRight</p>
                </div>
 
-                  <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                  <div onclick="textarea.value += '\n' + 'turnUp()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
                  <img style="width: 75%; margin-left: 7px;" src="https://cdn1.iconfinder.com/data/icons/ios-and-android-glyphs-set-4/52/up__curved__direction__arrow-512.png" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -10px; text-align: center; font-weight: 500;"> turnUp</p>
                </div>
 
-                <div style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
+                <div onclick="textarea.value += '\n' + 'turnDown()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer;">
                  <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/21/21178.png" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -10px; font-weight: 500;  font-size: 15px ; margin-left: -5px;"> turnDown</p>
                </div>
@@ -148,15 +225,232 @@
              font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; margin-left: 25px; cursor: pointer; "> ADD</button>
 
 
-             <textarea  style="resize: none; width: 96.5%; height: 440px;  margin-top: 20px; padding-left: 5px; font-size: 16px;" id="textarea"></textarea>
+             <textarea placeholder="/// Or write here"  style="resize: none; width: 96.5%; height: 440px;  margin-top: 20px; padding-left: 5px; font-size: 16px;" id="textarea"></textarea>
              <button onclick="runCodeFn()" id="runCodeBtn1" style="border-radius: 8px; background-color: rgb(47, 212, 135); color: white; font-family: 'Poppins', 'sans-serif';
              border: none; width: 25%; height: 35px; transform: scale(1.1); font-size: 18px; letter-spacing: 0.7px; margin-left: 135px; margin-top: 5px;
              transition: all 0.3s ease;">RUN</button>
              <p style="font-size: 13px; color: rgb(85, 85, 85); position: absolute; margin-top: -1px; margin-left: 143px;  "> CTRL + ENTER</p>
+             <p style="font-size: 15px; color: rgb(85, 85, 85); position: absolute; margin-top: -1px; margin-left: 8px;  "> LEVEL: <span id="userCurrentLevel">1</span></p>
         </div>
     </div>
 
+    <div id="levelsDiv" style="display: none; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); position: absolute; grid-template-columns: repeat(6, 1fr); grid-template-rows: 1fr 1fr 1fr 1fr; ">
+      <h2 style="color: white; font-size: 65px; margin-top: 5px; position: absolute; left: 15%; font-family: 'none', serif;
+       "> When Silence First Cracked</h2>
+        <i style="position: absolute; font-family: 'none'; font-size: 22px; color: white; margin-top: 90px; margin-left: 330px; -webkit-text-stroke: 0.3px black;"> The world feels familiar… but something is broken. — the first sign of The Merge</i>
+      <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; box-shadow: black 5px 5px 25px;
+        background-image: linear-gradient(to bottom, rgb(110, 201, 163), rgb(96, 173, 179));">
+                <p style="position: absolute; margin-top: 4px; margin-left: 10px; font-size: 13px;">  How to call functions</p>
+               <p class="levelText">LEVEL 1</p>
+                <button onclick="playLevel1()" class="playBtn">PLAY</button>
+        </div>
+        <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; 
+        box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(110, 152, 201), rgb(101, 96, 179));">
+            <p class="levelText">LEVEL 2</p>
+            <button onclick="playLevel2()" id="playBtn2" disabled class="playBtn">PLAY</button>
+        </div>
+        <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px;
+         box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(134, 110, 201), rgb(179, 96, 165));">
+            <p class="levelText">LEVEL 3</p>
+                <button disabled class="playBtn">PLAY</button>
+        </div>
+        <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; 
+        box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(201, 110, 110), rgb(179, 129, 96));">
+            <p class="levelText">LEVEL 4</p>
+                <button disabled class="playBtn">PLAY</button>
+        </div>
+    </div>
+
+    <dialog id="dialog1" style="width: 35%; height: 145px; background-color: rgb(161, 176, 194); position: absolute; display: none; margin-top: 420px; 
+    margin-left: 505px; border-radius: 8px; box-shadow: black 5px 5px 25px;">
+
+            <p id="nameDialog1" style="color: white; font-size: 22px; font-weight: 500; margin-top: -50px; margin-left: 275px; position: absolute;  "> Unknown</p>
+            <img style="width: 105%; height: 100%; position: absolute; margin-top: -90px; margin-left: -40px; " src="https://static.vecteezy.com/system/resources/thumbnails/027/187/944/small/gold-and-luxury-under-line-png.png" alt="">
+            <p id="dialogText1" style="font-size: 19px; "> A long time ago, there were 12 realms. One of them - our own - was The Never Realm. </p>
+            <button id="nextBtn1" onclick="changeDialog(0)" style="background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black;
+            font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; "> NEXT</button>
+            <img id="theWiseOneStudent" style="position: absolute; margin-top: -270px; margin-left: -1100px; transform: rotateY(180deg) scale(0.95); " src="https://i.ibb.co/d4PZqx13/the-Wise-One.png" alt="fassf">
+  
+        </dialog>
+
     <script>
+
+        function changeDialog(text) {
+           
+           let aT = [ "It was kept in balance by 7 ancient Dragon Cores. Each one held the power of a Source Dragon:  Motion, Energy, Life, Strength, Flow, Unity, and Balance. They were made to be impossible to break or move out of place with any of this world's power.",
+        "But everything changed after The Merge. Barriers between realms shattered — and deep world secrets began to surface. Now, the Dragon Cores have somehow vanished. And with them gone… the very fabric of reality is starting to collapse.", 
+        "You have been chosen by The Wise One to find out the cores' whereabouts, and bring them back, before it's too late.",
+        "I am The Wise One's first student. I can't go with you, but I'll give you a map and I'll send you my pet soon, who will guide you.",
+        "Good luck. The existence as you know it is at stake. Your first trip begins in the Never Realm."]
+
+            
+         nextBtn1.style.marginTop = "-250px"
+        if(text == 0) {
+            nextBtn1.addEventListener("click", () => {
+                changeDialog(1)
+            })
+        }
+        else if(text == 1) {
+            nextBtn1.addEventListener("click", () => {
+                changeDialog(2)
+            })
+        }
+        else if(text == 2) {
+            nextBtn1.addEventListener("click", () => {
+                nameDialog1.textContent = "The Wise One's Student"
+                nameDialog1.style.marginLeft = "200px"
+                changeDialog(3)
+            })
+
+        }
+        else if(text == 3) {
+            nextBtn1.addEventListener("click", () => {
+                changeDialog(4)
+            })
+        }
+        else if(text == 4) {
+            nextBtn1.addEventListener("click", () => {
+            dialog1.style.display = "none"
+
+            let imgNode = document.createElement("img")
+            imgNode.src = "https://i.ibb.co/RGS4pphj/hbMaster.png"
+            imgNode.style = "width: 35%; position: absolute; margin-top: -275px; margin-left: -5px; transform: rotateY(180deg); "
+
+            let dialogNode = document.createElement("div")
+            dialogNode.style = "width: 15%; height: 135px; position: absolute;  margin-top: -420px; margin-left: 290px; background-color: #a1b0c2; border-radius: 10px;"
+            dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> Hi. I'm the pet of your Master. You can call me Badger.</p>"
+            let nextBtn = document.createElement("button")
+            nextBtn.innerHTML = "NEXT"
+            nextBtn.style = "width: 30%; height: 30px; position: absolute; margin-top: 15px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+            nextBtn.addEventListener("click", () => {
+                dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> To protect your true identity and move easier between realms, the system will visualize you as an animal.</p>"
+                nextBtn.remove();
+                let nextBtn2 = document.createElement("button")
+                nextBtn2.innerHTML = "NEXT"
+                nextBtn2.style = "width: 30%; height: 30px; position: absolute; margin-top: -40px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                dialogNode.appendChild(nextBtn2)
+                nextBtn2.addEventListener("click", () => {
+                    dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> Your goal is to reach the apple by writing functions. You can write them directly, or just click the buttons on the right top.</p>"
+                    nextBtn2.remove();
+                    let nextBtn3 = document.createElement("button")
+                    nextBtn3.innerHTML = "NEXT"
+                    nextBtn3.style = "width: 30%; height: 30px; position: absolute; margin-top: -10px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                    dialogNode.appendChild(nextBtn3)
+                    nextBtn3.addEventListener("click", () => {
+                    dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>You write functions by: writing their name followed by (). Hint: In this level, you only need turnLeft(), turnUp(), step()</p>"
+                    nextBtn3.remove();
+                    let nextBtn4 = document.createElement("button")
+                    nextBtn4.innerHTML = "NEXT"
+                    nextBtn4.style = "width: 30%; height: 30px; position: absolute; margin-top: -20px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                    dialogNode.appendChild(nextBtn4)
+                    nextBtn4.addEventListener("click", () => {
+                        dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>Start off by clicking on the Green area to generate the map. Avoid the bugling!.</p>"
+                        nextBtn4.remove();
+                        let nextBtn5 = document.createElement("button")
+                        nextBtn5.innerHTML = "CLOSE"
+                        nextBtn5.style = "width: 30%; height: 30px; position: absolute; margin-top: -10px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                        dialogNode.appendChild(nextBtn5)
+                        nextBtn5.addEventListener("click", () => {
+                            dialogNode.remove();
+                            imgNode.remove();
+                        })
+                })
+                })
+            })
+            })
+            
+            dialogNode.appendChild(nextBtn)
+            document.body.appendChild(dialogNode)
+            document.body.appendChild(imgNode)
+
+            let divNode = document.createElement("div")
+            divNode.style = "width: 2%; background-color: rgb(0,0,0,0.99); height: 2%; position: absolute; transition: all 1.5s ease; opacity: 1;"
+            document.body.appendChild(divNode)
+            setTimeout(() => {
+                divNode.style.width = "100%"
+                divNode.style.height = "100%"
+            }, 100);
+            
+          setTimeout(() => {
+            divNode.style.opacity = "0"
+            setTimeout(() => {
+                fullContainer1.style.display = "grid"
+                let divNode2 = document.createElement("div")
+                divNode2.style = "width: 25%; height: 250px; position: absolute; display: grid; grid-template-columns: repeat(7, 1fr); margin-top: -700px; margin-left: -10px"
+                divNode2.innerHTML = "<img src=''> "
+                
+                document.body.appendChild(divNode2)
+                let amountsCellsAdd = 0
+                document.getElementById("map1").addEventListener("click", () => {
+                    userCurrentLevel.textContent == 1
+                        if(amountsCellsAdd == 0) {
+                            for(let i = 0; i < 64; i++) {  
+                                let divNode = document.createElement("div")
+                                divNode.setAttribute("class", "backgroundCellDiv")
+                                if(i == 60) {
+                                    divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
+                                }
+                                if( validValues.includes(i)) {
+                                    divNode.setAttribute("class", "wallCellDiv")
+                                }
+                            
+                        
+                                if( i == 43) {
+                                    divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -300px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8953/8953531.png">`
+                                }
+                                if(i == 52) {
+                                    divNode.innerHTML = `<img class="buglingImg" style="transform: scale(0.12); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/rGRJHNQB/bugling.png">`
+                                }
+                            
+                            
+                            
+                            
+                                map1.appendChild(divNode);
+                            }
+                        }
+                        amountsCellsAdd++
+                })
+            }, 700);
+            setTimeout(() => {
+                divNode.remove()
+            }, 1000);
+          }, 2200);
+
+          
+            })
+        }
+
+      
+        dialogText1.innerHTML = aT[text]
+        return text + 1
+    }
+
+        function playLevel1() {
+            let divNode = document.createElement("div")
+            divNode.style = "width: 2%; background-color: rgb(0,0,0,0.99); height: 2%; position: absolute; transition: all 1s ease; opacity: 1;"
+            document.body.appendChild(divNode)
+            setTimeout(() => {
+                divNode.style.width = "100%"
+                divNode.style.height = "100%"
+            }, 100);
+            
+          setTimeout(() => {
+            divNode.style.opacity = "0"
+            setTimeout(() => {
+                divNode.remove()
+            }, 1000);
+          }, 2000);
+
+        setTimeout(() => {
+            dialog1.style.display = "block";
+            levelsDiv.style.display = "none";
+        }, 2000);
+        }
+
+        function levelsDivDisplay() {
+            levelsDiv.style.display = "grid";
+            divStart.style.display = "none";  
+        }
 
     let codeGlossary = {
         step: "step()",
@@ -179,30 +473,14 @@
         const bottomBorder = [56, 57, 58, 59, 60, 61, 62, 63];
 
         const validValues = [...rightBorder, ...leftBorder, ...topBorder, ...bottomBorder];
-    let amountsCellsAdd = 0
-    document.getElementById("map1").addEventListener("click", () => {
-        if(amountsCellsAdd == 0) {
-        for(let i = 0; i < 64; i++) {  
-            let divNode = document.createElement("div")
-            divNode.setAttribute("class", "backgroundCellDiv")
-            if(i == 60) {
-                divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
-            }
-            if( validValues.includes(i)) {
-                divNode.setAttribute("class", "wallCellDiv")
-            }
-             map1.appendChild(divNode);
-        }
-        }
-        amountsCellsAdd++
-    })
+   
   
     function runCodeFn() {
-        let codeLines = document.getElementById("textarea").value.split("\n");
-        let currentPosition = 60; // Starting position of the fox
-        hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
-        
-        for(let i = 0; i < codeLines.length; i++) {
+            let codeLines = document.getElementById("textarea").value.split("\n");
+            let currentPosition = 60; // Starting position of the fox
+            hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+            
+            for(let i = 0; i < codeLines.length; i++) {
            setTimeout(() => {
              let codeLine = codeLines[i].trim();
             if(codeLine.trim() === codeGlossary.left) {
@@ -218,44 +496,187 @@
                 hbImg1.style.transform = "scale(0.15) rotate(0deg)";
             }
             else if(codeLine.trim() === codeGlossary.step) {
-                if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
-                    if( !leftBorder.includes(currentPosition)) {
-                         currentPosition = currentPosition - 1;
-                    hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) - 70) + "px"
-                    }
+                    if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
+                        if( !leftBorder.includes(currentPosition)) {
+                            currentPosition = currentPosition - 1;
+                        hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) - 70) + "px"
+                        }
 
-                   
-                }
-                else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
-                    if( !rightBorder.includes(currentPosition)) {
-         
-                        currentPosition = currentPosition + 1
-                        hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
+                        
                     }
-                }
-                else if(hbImg1.style.transform == "scale(0.15) rotate(180deg)") {
-                    if(!bottomBorder.includes(currentPosition)) {
-                        alert(currentPosition)
-                        currentPosition = currentPosition + 8
-                        hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) + 87) + "px"
-                    }                    
-                }
-                else if(hbImg1.style.transform == "scale(0.15) rotate(0deg)") {
-                    if(!topBorder.includes(currentPosition)) {
-                        currentPosition = currentPosition - 8
-                        hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                    else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
+                        if( !rightBorder.includes(currentPosition)) {
+            
+                            currentPosition = currentPosition + 1
+                            hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
+                        }
                     }
-                }
+                    else if(hbImg1.style.transform == "scale(0.15) rotate(180deg)") {
+                        if(!bottomBorder.includes(currentPosition)) {
+                            currentPosition = currentPosition + 8
+                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) + 87) + "px"
+                        }                    
+                    }
+                    else if(hbImg1.style.transform == "scale(0.15) rotate(0deg)") {
+                        if(!topBorder.includes(currentPosition)) {
+                            currentPosition = currentPosition - 8
+                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                        }
+                    }
                 
+                    else {
+                        if(!topBorder.includes(currentPosition)) {
+                            currentPosition = currentPosition - 8
+                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                        }
+                    }
                 
               
             }
 
+           
+            checkIfBuglingIsReached()
+            checkIfAppleIsReached()
+            
            }, i * 350);
+          
+        }
+
+            function checkIfAppleIsReached() {
+
+                if(userCurrentLevel.textContent == 1) {
+                    if(currentPosition == 35) {
+                       setTimeout(() => {
+                        passLevelDialog()
+                       }, 1500);
+                    }
+                   
+                }
+        }
+        function checkIfBuglingIsReached() {
+        if(userCurrentLevel.textContent == 1) {
+            if(currentPosition == 52) {
+                alert("You've been caught by the bugling!")
+                hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+            }
         }
     }
-
    
+    }
+
+
+
+
+
+    let buttons = document.querySelectorAll("button")
+    buttons.forEach(b => {
+        if(b.disabled) {
+            b.style.filter = "brightness(60%)"
+            b.style.cursor = "not-allowed"
+        }
+    })
+   
+    function passLevelDialog() {
+        let divNode = document.createElement("div")
+        divNode.style = "width: 15%; background-color: #3be47c; height: 120px; position: absolute; transition: all 0.4s ease; margin-left: 35%; margin-top: -400px; border-radius: 6px; border: 1px solid black; transform: scale(0)"
+        divNode.innerHTML = "<p style='font-size: 23px; color: white; font-weight: 500;'>You've passed the level!</p>"
+        document.body.appendChild(divNode)
+        setTimeout(() => {
+            divNode.style.transform = "scale(1)"
+        }, 10);
+        setTimeout(() => {
+            divNode.style.transform = "scale(0)"
+            setTimeout(() => {
+                divNode.remove()
+                localStorage.setItem("userLevelCODING", 2)
+                location.reload()
+            }, 450);
+        }, 2500);
+       
+    }
+
+    function checkStorage() {
+        if(localStorage.getItem("userLevelCODING") == 2) {
+            playBtn2.disabled = false
+            playBtn2.style.filter = "brightness(100%)"
+            playBtn2.style.cursor = "pointer"
+        }
+        else if(localStorage.getItem("userLevelCODING") == 3) {
+            playBtn3.disabled = false
+            playBtn3.style.filter = "brightness(100%)"
+            playBtn3.style.cursor = "pointer"
+        }
+    }
+    checkStorage()
+
+
+    function playLevel2() {
+
+        let dialogNode = document.createElement("dialog")
+          dialogNode.style = "width: 35%; height: 145px; background-color: rgb(161, 176, 194); position: absolute; display: block; margin-top: 420px; margin-left: 505px; border-radius: 8px; box-shadow: black 5px 5px 25px;"
+          dialogNode.innerHTML = "<p style='color: white; font-size: 22px; font-weight: 500; margin-top: -50px; margin-left: 285px; position: absolute;  '> Badger</p>"
+          dialogNode.innerHTML += "<img style='width: 105%; height: 100%; position: absolute; margin-top: -90px; margin-left: -40px; ' src='https://static.vecteezy.com/system/resources/thumbnails/027/187/944/small/gold-and-luxury-under-line-png.png' alt=''>"
+          dialogNode.innerHTML += "<p id='dialogText2' style='font-size: 19px; '> That was amazing! Our journey still continues at the Never Realm. I've got you a map of half of the Merged Realms to help you visualize our goal. Since The Merge ocurred recently, it's really hard to even get half one </p>"
+          dialogNode.innerHTML += "<button id='nextBtn2' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; '> CONTINUE</button>"
+          dialogNode.innerHTML += "<img style='position: absolute; margin-top: -350px; margin-left: -560px; transform: rotateY(180deg) scale(0.42); ' src='https://i.ibb.co/ZzW8Bmzt/hbImg2.png' alt='fassf'>"
+
+        let divNode = document.createElement("div")
+            divNode.style = "width: 2%; background-color: rgb(0,0,0,0.99); height: 2%; position: absolute; transition: all 1s ease; opacity: 1;"
+            document.body.appendChild(divNode)
+            setTimeout(() => {
+                divNode.style.width = "100%"
+                divNode.style.height = "100%"
+            }, 100);
+            
+          setTimeout(() => {
+            divNode.style.opacity = "0"
+            setTimeout(() => {
+                divNode.remove()
+            }, 1000);
+          }, 2000);
+
+        setTimeout(() => {
+            levelsDiv.style.display = "none";
+           setTimeout(() => {
+            document.body.appendChild(dialogNode)
+           }, 450);
+
+        }, 2000);
+        
+        setTimeout(() => {
+            nextBtn2.addEventListener("click", () => {
+                dialogNode.innerHTML = "<p style='color: white; font-size: 22px; font-weight: 500; margin-top: -50px; margin-left: 285px; position: absolute;  '> Badger</p>"
+                dialogNode.innerHTML += "<img style='width: 105%; height: 100%; position: absolute; margin-top: -90px; margin-left: -40px; ' src='https://static.vecteezy.com/system/resources/thumbnails/027/187/944/small/gold-and-luxury-under-line-png.png' alt=''>"
+                dialogNode.innerHTML += "<p id='dialogText2' style='font-size: 19px; '> That was amazing! Our journey still continues at the Never Realm. I've got you a map of half of the Merged Realms to help you visualize our goal. Since The Merge ocurred recently, it's really hard to even get half one </p>"
+                dialogNode.innerHTML += "<img style='position: absolute; margin-top: -350px; margin-left: -560px; transform: rotateY(180deg) scale(0.42); ' src='https://i.ibb.co/ZzW8Bmzt/hbImg2.png' alt='fassf'>"
+
+            let imgNode = document.createElement("img")
+            imgNode.style = "width: 1%; position: absolute; margin-top: -75px; margin-left:225px; transition: all 0.4s ease;"
+            imgNode.src = "https://i.ibb.co/27qwbt0T/merged-Realms-Map1.png"
+            dialogNode.appendChild(imgNode)
+            setTimeout(() => {
+                imgNode.style.width = "90%"
+                imgNode.style.marginLeft = "-10px"
+                imgNode.style.marginTop = "-250px"
+                imgNode.style.transform = "scale(1.55)"
+                setTimeout(() => {
+                    imgNode.style.transform = "scale(0.05) rotate(180deg)"
+                    setTimeout(() => {
+                        imgNode.remove()
+                        dialogText2.textContent = "I'll try to get you a better one soon. Now, let me tell you more about what was The Merge"
+                        dialogText2+= "<button id='nextBtn22' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; '> NEXT</button>"
+                        setTimeout(() => {
+                            nextBtn22.addEventListener("click", () => {
+                                dialogText2.textContent = "Not long ago, there were 12 realms, and the only possible way to travel between them, was through a magic tea."
+                            })
+                        }, 25);
+                    }, 450);
+                }, 5500);
+            }, 10);
+           
+        })
+        }, 3000);
+    }
   </script>
 </body>
 </html>
