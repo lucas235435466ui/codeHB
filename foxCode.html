@@ -15,6 +15,8 @@
               background-size: cover; 
         }
 
+      
+
         #divStart {
             background-image: url("https://media.publit.io/file/Hills-and-mountains-night.png");
             background-size: cover;
@@ -102,7 +104,7 @@
             font-weight: 500;
         }
 
-        #nextBtn1:hover, #nextBtn2:hover {
+        #nextBtn1:hover, #nextBtn2:hover, #nextBtn22:hover {
             transform: scale(1.05);
             cursor: pointer;
             background-color: #534c94 !important;
@@ -546,6 +548,7 @@
 
                 if(userCurrentLevel.textContent == 1) {
                     if(currentPosition == 35) {
+                        appleImg1.style.transform = "scale(0.02)"
                        setTimeout(() => {
                         passLevelDialog()
                        }, 1500);
@@ -617,7 +620,7 @@
           dialogNode.innerHTML = "<p style='color: white; font-size: 22px; font-weight: 500; margin-top: -50px; margin-left: 285px; position: absolute;  '> Badger</p>"
           dialogNode.innerHTML += "<img style='width: 105%; height: 100%; position: absolute; margin-top: -90px; margin-left: -40px; ' src='https://static.vecteezy.com/system/resources/thumbnails/027/187/944/small/gold-and-luxury-under-line-png.png' alt=''>"
           dialogNode.innerHTML += "<p id='dialogText2' style='font-size: 19px; '> That was amazing! Our journey still continues at the Never Realm. I've got you a map of half of the Merged Realms to help you visualize our goal. Since The Merge ocurred recently, it's really hard to even get half one </p>"
-          dialogNode.innerHTML += "<button id='nextBtn2' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; '> CONTINUE</button>"
+          dialogNode.innerHTML += "<button id='nextBtn2' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; '> SEE</button>"
           dialogNode.innerHTML += "<img style='position: absolute; margin-top: -350px; margin-left: -560px; transform: rotateY(180deg) scale(0.42); ' src='https://i.ibb.co/ZzW8Bmzt/hbImg2.png' alt='fassf'>"
 
         let divNode = document.createElement("div")
@@ -656,18 +659,48 @@
             dialogNode.appendChild(imgNode)
             setTimeout(() => {
                 imgNode.style.width = "90%"
-                imgNode.style.marginLeft = "-10px"
+                imgNode.style.marginLeft = "70px"
                 imgNode.style.marginTop = "-250px"
                 imgNode.style.transform = "scale(1.55)"
                 setTimeout(() => {
                     imgNode.style.transform = "scale(0.05) rotate(180deg)"
                     setTimeout(() => {
                         imgNode.remove()
-                        dialogText2.textContent = "I'll try to get you a better one soon. Now, let me tell you more about what was The Merge"
-                        dialogText2+= "<button id='nextBtn22' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 550px; cursor: pointer; margin-top: -5px; '> NEXT</button>"
+                        dialogText2.textContent = "I'll try to get you a better one soon. Now, let me tell you more about what was The Merge";
+                        dialogNode.innerHTML += "<button id='nextBtn22' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 420px; margin-top: 55px; transition: all 0.3s ease; '> NEXT</button>"
                         setTimeout(() => {
                             nextBtn22.addEventListener("click", () => {
-                                dialogText2.textContent = "Not long ago, there were 12 realms, and the only possible way to travel between them, was through a magic tea."
+                                dialogText2.textContent = "Not long ago, there were 12 realms, and the only possible way to travel between them, was through a special portal located underground. There were 1 portal for each realm."
+                                nextBtn22.addEventListener("click", () => {
+                                    dialogText2.textContent = 'I remember I was embarking for a new adventure with my team. Then all of a sudden, before we could even get on board, the whole sky turned turned black. Then, something blood red opened in the sky and started ejecting and sucking things. Withing 20 seconds, the black sky was full of these "portals".'
+                                    nextBtn22.addEventListener("click", () => {
+                                        dialogText2.textContent = 'I was able to get together with my team and my master, but, then, a gust of wind pulled us all into the portal. And it seems that all the people from every realm got sucked too.'
+                                        nextBtn22.addEventListener("click", () => {
+                                            dialogText2.textContent = 'The last thing I remember is getting flashbacks from a few days ago before The Merge, about my master being really worried about an event called "The Coalescence". He said "Together is the only way to survive", and that The Coalescence was supposed to occur in thousands of years. But, something made it accelerate and happen that day.'
+                                            nextBtn22.addEventListener("click", () => {
+                                                dialogText2.textContent = 'Now I see that "The Coalescence" was actually an old prophesied name for The Merge. The day where all the realms merged together into one.'
+                                                nextBtn22.addEventListener("click", () => {
+                                                    dialogText2.textContent = 'When I woke up, I was in my origin realm, The Never Realm, or at least what was left of it, I didn\' know what had happened. After exploring for a while, I found one of my team members, The Wise One\'s first student. Neither of us knew anything of what happened after the last time we saw each other.'
+                                                    nextBtn22.addEventListener("click", () => {
+                                                        dialogText2.textContent = 'Less than a month has passed since The Merge. Now, we have already accustomed to all the realms being merged into one. The union of the realms, is really unstable, and that causes MergeQuakes. '
+                                                        nextBtn22.addEventListener("click", () => {
+                                                            dialogText2.textContent = 'The MergeQuakes are when 2 realms attempt to share the same area, and they cause a small Merge, that only affects the surroundings, but it\'s still fatal. They can happen anywhere at anytime. But, don\'t worry, as of now, they don\'t seem to be happening often. But you should know:'
+                                                            nextBtn22.addEventListener("click", () => {
+                                                                dialogText2.textContent = 'The only way to stop them is using pure energy, which you can only get from The Dragon Cores, or any of the Source Dragons. Since they appear to have shattered or dissapeared after The Merge, there\'s no current way to stop them. That\'s why your mission is extremely important.'
+                                                                nextBtn22.addEventListener("click", () => {
+                                                                    dialogText2.textContent = 'Your next journey continues in the Never Realm. I\'ll go with you. We don\'t know what happened to the Dragon Cores. Maybe the only way to get them back is to contact the Source Dragons to create new ones. Let\'s go.'
+                                                                    nextBtn22.addEventListener("click", () => {
+                                                                        dialogNode.remove()
+                                                                    })
+                                                                })
+                                                            })
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })
                             })
                         }, 25);
                     }, 450);
