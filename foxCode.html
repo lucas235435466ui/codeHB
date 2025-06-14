@@ -20,7 +20,7 @@
         #divStart {
             background-image: url("https://media.publit.io/file/Hills-and-mountains-night.png");
             background-size: cover;
-            width: 100%;
+            width: auto;
             height: 955px;
         }
 
@@ -277,6 +277,16 @@
 
     <script>
 
+    let codeGlossary = {
+        step: "step()",
+        left: "turnLeft()",
+        right: "turnRight()",
+        up: "turnUp()",
+        down: "turnDown()"
+
+    }
+
+
         function changeDialog(text) {
            
            let aT = [ "It was kept in balance by 7 ancient Dragon Cores. Each one held the power of a Source Dragon:  Motion, Energy, Life, Strength, Flow, Unity, and Balance. They were made to be impossible to break or move out of place with any of this world's power.",
@@ -384,6 +394,33 @@
                 document.body.appendChild(divNode2)
                 let amountsCellsAdd = 0
                 document.getElementById("map1").addEventListener("click", () => {
+                    let imgNode = document.createElement("img")
+                    imgNode.src = "https://i.ibb.co/RGS4pphj/hbMaster.png"
+                    imgNode.style = "width: 35%; position: absolute; margin-top: -275px; margin-left: -5px; transform: rotateY(180deg); "
+
+                    let dialogNode = document.createElement("div")
+                    dialogNode.style = "width: 15%; height: 135px; position: absolute;  margin-top: -420px; margin-left: 290px; background-color: #a1b0c2; border-radius: 10px;"
+                    dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> Hi. I'm the pet of your Master. You can call me Badger.</p>"
+                    let nextBtn = document.createElement("button")
+                    nextBtn.innerHTML = "NEXT"
+                    nextBtn.style = "width: 30%; height: 30px; position: absolute; margin-top: 15px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                 
+                    nextBtn.addEventListener("click", () => {
+                        dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> To protect your true identity and move easier between realms, the system will visualize you as an animal.</p>"
+                        nextBtn.addEventListener("click", () => {
+                            dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'> Your goal is to reach the apple by writing functions. You can write them directly, or just click the buttons on the right top.</p>"
+                            nextBtn.addEventListener("click", () => {
+                            dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>You write functions by: writing their name followed by (). Hint: In this level, you only need turnLeft(), turnUp(), step()</p>"
+                            nextBtn.addEventListener("click", () => {
+                                dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>Start off by clicking on the Green area to generate the map. Avoid the bugling!.</p>"
+                                nextBtn.addEventListener("click", () => {
+                                    dialogNode.remove();
+                                    imgNode.remove();
+                                })
+                        })
+                        })
+                    })
+                    })
                     userCurrentLevel.textContent == 1
                         if(amountsCellsAdd == 0) {
                             for(let i = 0; i < 64; i++) {  
@@ -454,14 +491,7 @@
             divStart.style.display = "none";  
         }
 
-    let codeGlossary = {
-        step: "step()",
-        left: "turnLeft()",
-        right: "turnRight()",
-        up: "turnUp()",
-        down: "turnDown()"
-
-    }
+ 
 
     function addLineToCode() {
         document.getElementById("textarea").value =  document.getElementById("textarea").value + "\n"  + document.getElementById("codeInp1").value ;
@@ -497,7 +527,8 @@
             else if(codeLine.trim() === codeGlossary.up) {
                 hbImg1.style.transform = "scale(0.15) rotate(0deg)";
             }
-            else if(codeLine.trim() === codeGlossary.step) {
+            else if(codeLine.trim().startsWith("step(") && codeLine.trim().endsWith(")")) {
+                   function stepFn() {
                     if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
                         if( !leftBorder.includes(currentPosition)) {
                             currentPosition = currentPosition - 1;
@@ -524,17 +555,24 @@
                             currentPosition = currentPosition - 8
                             hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
                         }
-                    }
-                
+                    }               
                     else {
                         if(!topBorder.includes(currentPosition)) {
                             currentPosition = currentPosition - 8
                             hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
                         }
                     }
-                
-              
+                   }     
+                   stepFn()
+
+                    let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
+                    for(let i = 0; i < stepParameter - 1; i++) {
+                       setTimeout(() => {
+                        stepFn()
+                       }, i * 350);
+                    }
             }
+
 
            
             checkIfBuglingIsReached()
@@ -668,29 +706,116 @@
                         imgNode.remove()
                         dialogText2.textContent = "I'll try to get you a better one soon. Now, let me tell you more about what was The Merge";
                         dialogNode.innerHTML += "<button id='nextBtn22' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 18px;  letter-spacing: 0.7px; margin-left: 420px; margin-top: 55px; transition: all 0.3s ease; '> NEXT</button>"
+                         dialogText2.style.fontSize = "18px"
                         setTimeout(() => {
                             nextBtn22.addEventListener("click", () => {
-                                dialogText2.textContent = "Not long ago, there were 12 realms, and the only possible way to travel between them, was through a special portal located underground. There were 1 portal for each realm."
+                                dialogText2.textContent = "Not long ago, there were 12 realms, and the only possible way to travel between them, was through a special portal located underground. There was 1 portal for each realm."
                                 nextBtn22.addEventListener("click", () => {
-                                    dialogText2.textContent = 'I remember I was embarking for a new adventure with my team. Then all of a sudden, before we could even get on board, the whole sky turned turned black. Then, something blood red opened in the sky and started ejecting and sucking things. Withing 20 seconds, the black sky was full of these "portals".'
+                                    dialogText2.textContent = 'I remember we were about to begin a new adventure. My team and I hadn’t even boarded the ship when suddenly, the entire sky turned black. A blood-red rift tore open above us, pulling and ejecting everything around it. In just 20 seconds, the sky was full of these terrifying red portals.'
                                     nextBtn22.addEventListener("click", () => {
-                                        dialogText2.textContent = 'I was able to get together with my team and my master, but, then, a gust of wind pulled us all into the portal. And it seems that all the people from every realm got sucked too.'
+                                        dialogText2.textContent = 'I managed to regroup with my team and our master. But before we could make sense of anything, a violent gust of wind dragged us all into one of the portals. It wasn’t just us — people from every realm were getting pulled in too.'
                                         nextBtn22.addEventListener("click", () => {
-                                            dialogText2.textContent = 'The last thing I remember is getting flashbacks from a few days ago before The Merge, about my master being really worried about an event called "The Coalescence". He said "Together is the only way to survive", and that The Coalescence was supposed to occur in thousands of years. But, something made it accelerate and happen that day.'
+                                            dialogText2.textContent = 'The last thing I remember is getting flashbacks from a conversation I had with my master just a few days before all this. He seemed deeply troubled about something he called The Coalescence. He warned me, "Only together can we survive." He believed it was an event meant to happen thousands of years in the future — but somehow, it happened that day.'
+                                           
                                             nextBtn22.addEventListener("click", () => {
-                                                dialogText2.textContent = 'Now I see that "The Coalescence" was actually an old prophesied name for The Merge. The day where all the realms merged together into one.'
+                                                dialogText2.textContent = 'Now I see that "The Coalescence" was actually the old prophesied name for The Merge. The day where all the realms merged together into one.'
                                                 nextBtn22.addEventListener("click", () => {
-                                                    dialogText2.textContent = 'When I woke up, I was in my origin realm, The Never Realm, or at least what was left of it, I didn\' know what had happened. After exploring for a while, I found one of my team members, The Wise One\'s first student. Neither of us knew anything of what happened after the last time we saw each other.'
+                                                    dialogText2.textContent = 'When I woke up, I was in my origin realm, The Never Realm. Or at least, what was left of it, I didn\' know what had happened. After exploring for a while, I found one of my teammates. Neither of us knew anything of what happened after the last time we saw each other.'
                                                     nextBtn22.addEventListener("click", () => {
-                                                        dialogText2.textContent = 'Less than a month has passed since The Merge. Now, we have already accustomed to all the realms being merged into one. The union of the realms, is really unstable, and that causes MergeQuakes. '
+                                                        dialogText2.textContent = 'Less than a month has passed since The Merge. We have already accustomed to all the realms being merged into one. But the union of the realms. is unstable. That instability causes what we now call MergeQuakes.'
                                                         nextBtn22.addEventListener("click", () => {
                                                             dialogText2.textContent = 'The MergeQuakes are when 2 realms attempt to share the same area, and they cause a small Merge, that only affects the surroundings, but it\'s still fatal. They can happen anywhere at anytime. But, don\'t worry, as of now, they don\'t seem to be happening often. But you should know:'
                                                             nextBtn22.addEventListener("click", () => {
-                                                                dialogText2.textContent = 'The only way to stop them is using pure energy, which you can only get from The Dragon Cores, or any of the Source Dragons. Since they appear to have shattered or dissapeared after The Merge, there\'s no current way to stop them. That\'s why your mission is extremely important.'
+                                                                dialogText2.textContent = 'The only way to stop MergeQuakes is by using pure energy — and that only comes from Dragon Cores or directly from the Source Dragons. Since they appear to have shattered or dissapeared after The Merge, there\'s no current way to stop them. That\'s why your mission is extremely important.'
                                                                 nextBtn22.addEventListener("click", () => {
                                                                     dialogText2.textContent = 'Your next journey continues in the Never Realm. I\'ll go with you. We don\'t know what happened to the Dragon Cores. Maybe the only way to get them back is to contact the Source Dragons to create new ones. Let\'s go.'
                                                                     nextBtn22.addEventListener("click", () => {
                                                                         dialogNode.remove()
+                                                                        setTimeout(() => {
+                                                                            document.body.style.backgroundImage = "url('https://i.ibb.co/9mhssq4f/background1.jpg')"
+                                                                             document.body.style.backgroundPositionY = "-95px"
+                                                                        }, 1525);
+
+                                                                        let divNode = document.createElement("div")
+                                                                        divNode.style = "width: 2%; background-color: rgb(0,0,0,0.99); height: 2%; position: absolute; transition: all 1.5s ease; opacity: 1;"
+                                                                        document.body.appendChild(divNode)
+                                                                        setTimeout(() => {
+                                                                            divNode.style.width = "100%"
+                                                                            divNode.style.height = "100%"
+                                                                        }, 100);
+                                                                        
+                                                                    setTimeout(() => {
+                                                                        divNode.style.opacity = "0"
+                                                                        setTimeout(() => {
+                                                                            fullContainer1.style.display = "grid"
+                                                                            userCurrentLevel.textContent = 2
+                                                                            let imgNode = document.createElement("img")
+                                                                            imgNode.src = "https://i.ibb.co/RGS4pphj/hbMaster.png"
+                                                                            imgNode.style = "width: 35%; position: absolute; margin-top: -275px; margin-left: -5px; transform: rotateY(180deg); "
+
+
+                                                                            let dialogNode = document.createElement("div")
+                                                                            let pNode = document.createElement("p")
+                                                                            pNode.style = "font-size: 15px; margin-top: 10px; margin-left: 10px;"
+                                                                            dialogNode.style = "width: 15%; height: 135px; position: absolute;  margin-top: -420px; margin-left: 290px; background-color: #a1b0c2; border-radius: 10px;"
+                                                                            pNode.innerHTML = "Hi. I just told you a lot of things about The Merge. Now, I\'ll explain to you something new."
+                                                                            
+                                                                            let nextBtnn2 = document.createElement("button")
+                                                                             nextBtnn2.style = "width: 30%; height: 30px; position: absolute; margin-top: 125px; margin-left: 185px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                                                                             nextBtnn2.innerHTML +="NEXT"
+                                                                            
+                                                                             nextBtnn2.addEventListener("click", () => {
+                                                                                pNode.innerHTML = "I've already taught you the basic functions. step(), turnLeft(), turnRight(), turnUp(), turnDown()."
+                                                                                nextBtnn2.addEventListener("click", () => {
+                                                                                    pNode.innerHTML = " Now, you can write numbers inside the parentheses to indicate how many times does the function need to be executed. We'll call that number a parameter."
+                                                                                    nextBtnn2.addEventListener("click", () => {
+                                                                                     pNode.innerHTML = " We're going this direction because I'm sure I saw a scroll over there. Your goal is to reach that scroll with maximum 6 lines of code."
+                                                                                    nextBtnn2.addEventListener("click", () => {
+                                                                                        pNode.innerHTML = "You'll use parameters in step(). For example, step(3) will make move 3 steps. Start off by clicking the green area to generate the map."
+                                                                                        nextBtnn2.innerHTML = "CLOSE"
+                                                                                        nextBtnn2.addEventListener("click", () => {
+                                                                                            dialogNode.remove();
+                                                                                            imgNode.remove();
+                                                                                        })
+                                                                                })
+                                                                                })
+                                                                            })
+                                                                            })
+                                                                            
+                                                                            dialogNode.appendChild(nextBtnn2)
+                                                                            dialogNode.appendChild(pNode)
+
+                                                                            document.body.appendChild(dialogNode)
+                                                                            document.body.appendChild(imgNode)
+                                                                            let amountsCellsAdd = 0
+                                                                            document.getElementById("map1").addEventListener("click", () => {
+                                                                                    if(amountsCellsAdd == 0) {
+                                                                                        for(let i = 0; i < 64; i++) {  
+                                                                                            let divNode = document.createElement("div")
+                                                                                            divNode.setAttribute("class", "backgroundCellDiv")
+                                                                                            if(i == 63) {
+                                                                                                divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
+                                                                                            }
+                                                                                            if( validValues.includes(i)) {
+                                                                                                divNode.setAttribute("class", "wallCellDiv")
+                                                                                            }
+                                                                                            if( i == 47) {
+                                                                                                divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -300px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8953/8953531.png">`
+                                                                                            }
+                                                                                            let buglingDiv = [52, 53, 54, 55]
+                                                                                            if(buglingDiv.includes(i)) {
+                                                                                                divNode.innerHTML = `<img class="buglingImg" style="transform: scale(0.12); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/rGRJHNQB/bugling.png">`
+                                                                                            }
+                                                                                            map1.appendChild(divNode);
+                                                                                        }
+                                                                                    }
+                                                                                    amountsCellsAdd++
+                                                                            })
+                                                                        }, 700);
+                                                                        setTimeout(() => {
+                                                                            divNode.remove()
+                                                                        }, 1000); 
+                                                                    }, 2200);
                                                                     })
                                                                 })
                                                             })
@@ -709,7 +834,9 @@
            
         })
         }, 3000);
+
     }
+
   </script>
 </body>
 </html>
