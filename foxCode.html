@@ -513,8 +513,12 @@
             }
             let codeLines = document.getElementById("textarea").value.split("\n"); // Starting position of the fox
             hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
-            
+        
             for(let i = 0; i < codeLines.length; i++) {
+                if(codeLines[i].trim() == "") {
+                    codeLines.splice(i, 1);
+                    i--;
+                }
            setTimeout(() => {
              let codeLine = codeLines[i].trim();
             if(codeLine.trim() === codeGlossary.left) {
@@ -600,7 +604,7 @@
                             }, 1500);
                         }
                     }
-                    else { alert("Your code must be less than 7 lines. Empty lines are counted")}
+                    else { alert("Your code must be less than 7 lines. Empty lines aren't counted")}
                 }
             }
         function checkIfBuglingIsReached() {
