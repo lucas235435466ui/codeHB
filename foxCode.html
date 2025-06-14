@@ -505,11 +505,13 @@
         const bottomBorder = [56, 57, 58, 59, 60, 61, 62, 63];
 
         const validValues = [...rightBorder, ...leftBorder, ...topBorder, ...bottomBorder];
-   
-  
+     
+        let currentPosition = 60
     function runCodeFn() {
-            let codeLines = document.getElementById("textarea").value.split("\n");
-            let currentPosition = 60; // Starting position of the fox
+            if(userCurrentLevel.textContent == 2) {
+                currentPosition = 63
+            }
+            let codeLines = document.getElementById("textarea").value.split("\n"); // Starting position of the fox
             hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
             
             for(let i = 0; i < codeLines.length; i++) {
@@ -539,7 +541,6 @@
                     }
                     else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
                         if( !rightBorder.includes(currentPosition)) {
-            
                             currentPosition = currentPosition + 1
                             hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
                         }
@@ -567,14 +568,11 @@
 
                     let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
                     for(let i = 0; i < stepParameter - 1; i++) {
-                       setTimeout(() => {
                         stepFn()
-                       }, i * 350);
                     }
             }
 
-
-           
+            console.log(currentPosition)
             checkIfBuglingIsReached()
             checkIfAppleIsReached()
             
@@ -593,7 +591,18 @@
                     }
                    
                 }
-        }
+                else if(userCurrentLevel.textContent == 2)  {
+                    if(codeLines.length <= 6) {
+                        if(currentPosition == 47) {
+                            appleImg1.style.transform = "scale(0.02)"
+                            setTimeout(() => {
+                                passLevelDialog()
+                            }, 1500);
+                        }
+                    }
+                    else { alert("Your code must be less than 7 lines. Empty lines are counted")}
+                }
+            }
         function checkIfBuglingIsReached() {
         if(userCurrentLevel.textContent == 1) {
             if(currentPosition == 52) {
@@ -601,6 +610,13 @@
                 hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
             }
         }
+        else if(userCurrentLevel.textContent == 2) {
+            let buglingDiv = [55, 54, 53, 52]
+            if(buglingDiv.includes(currentPosition)) {
+                alert("You've been caught by the bugling!")
+                hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+            }
+        }   
     }
    
     }
@@ -717,9 +733,9 @@
                                         nextBtn22.addEventListener("click", () => {
                                             dialogText2.textContent = 'The last thing I remember is getting flashbacks from a conversation I had with my master just a few days before all this. He seemed deeply troubled about something he called The Coalescence. He warned me, "Only together can we survive." He believed it was an event meant to happen thousands of years in the future — but somehow, it happened that day.'
                                            
+                                        nextBtn22.addEventListener("click", () => {
+                                            dialogText2.textContent = 'Now I see that "The Coalescence" was actually the old prophesied name for The Merge. The day where all the realms merged together into one.'
                                             nextBtn22.addEventListener("click", () => {
-                                                dialogText2.textContent = 'Now I see that "The Coalescence" was actually the old prophesied name for The Merge. The day where all the realms merged together into one.'
-                                                nextBtn22.addEventListener("click", () => {
                                                     dialogText2.textContent = 'When I woke up, I was in my origin realm, The Never Realm. Or at least, what was left of it, I didn\' know what had happened. After exploring for a while, I found one of my teammates. Neither of us knew anything of what happened after the last time we saw each other.'
                                                     nextBtn22.addEventListener("click", () => {
                                                         dialogText2.textContent = 'Less than a month has passed since The Merge. We have already accustomed to all the realms being merged into one. But the union of the realms. is unstable. That instability causes what we now call MergeQuakes.'
@@ -789,6 +805,7 @@
                                                                             document.body.appendChild(imgNode)
                                                                             let amountsCellsAdd = 0
                                                                             document.getElementById("map1").addEventListener("click", () => {
+                                                                                let currentPosition = 63
                                                                                     if(amountsCellsAdd == 0) {
                                                                                         for(let i = 0; i < 64; i++) {  
                                                                                             let divNode = document.createElement("div")
@@ -800,7 +817,7 @@
                                                                                                 divNode.setAttribute("class", "wallCellDiv")
                                                                                             }
                                                                                             if( i == 47) {
-                                                                                                divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -300px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8953/8953531.png">`
+                                                                                                divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -212px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8194/8194907.png">`
                                                                                             }
                                                                                             let buglingDiv = [52, 53, 54, 55]
                                                                                             if(buglingDiv.includes(i)) {
