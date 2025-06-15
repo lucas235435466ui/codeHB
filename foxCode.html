@@ -241,7 +241,7 @@
        "> When Silence First Cracked</h2>
         <i style="position: absolute; font-family: 'none'; font-size: 22px; color: white; margin-top: 90px; margin-left: 330px; -webkit-text-stroke: 0.3px black;"> The world feels familiar… but something is broken. — the first sign of The Merge</i>
       <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; box-shadow: black 5px 5px 25px;
-        background-image: linear-gradient(to bottom, rgb(110, 201, 163), rgb(96, 173, 179));">
+        background-image: linear-gradient(to bottom, rgb(112, 184, 154), rgb(90, 149, 153));">
                 <p style="position: absolute; margin-top: 4px; margin-left: 10px; font-size: 13px;">  How to call functions</p>
                <p class="levelText">LEVEL 1</p>
                 <button onclick="playLevel1()" class="playBtn">PLAY</button>
@@ -252,12 +252,12 @@
             <button onclick="playLevel2()" id="playBtn2" disabled class="playBtn">PLAY</button>
         </div>
         <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px;
-         box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(134, 110, 201), rgb(179, 96, 165));">
+         box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(120, 106, 160), rgb(145, 84, 135));">
             <p class="levelText">LEVEL 3</p>
-                <button disabled class="playBtn">PLAY</button>
+                <button disabled id="playBtn3" class="playBtn">PLAY</button>
         </div>
         <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; 
-        box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(201, 110, 110), rgb(179, 129, 96));">
+        box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(184, 111, 111), rgb(163, 119, 89));">
             <p class="levelText">LEVEL 4</p>
                 <button disabled class="playBtn">PLAY</button>
         </div>
@@ -293,7 +293,7 @@
         "But everything changed after The Merge. Barriers between realms shattered — and deep world secrets began to surface. Now, the Dragon Cores have somehow vanished. And with them gone… the very fabric of reality is starting to collapse.", 
         "You have been chosen by The Wise One to find out the cores' whereabouts, and bring them back, before it's too late.",
         "I am The Wise One's first student. I can't go with you, but I'll give you a map and I'll send you my pet soon, who will guide you.",
-        "Good luck. The existence as you know it is at stake. Your first trip begins in the Never Realm."]
+        "Good luck. The existence as you know it is at stake. Your first trip begins in the Never Realm.  To enter or leave any city in any realm, you need to pass a code barrier. Your first code barrier starts now."]
 
             
          nextBtn1.style.marginTop = "-250px"
@@ -356,7 +356,7 @@
                     nextBtn4.style = "width: 30%; height: 30px; position: absolute; margin-top: -20px; margin-left: 155px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
                     dialogNode.appendChild(nextBtn4)
                     nextBtn4.addEventListener("click", () => {
-                        dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>Start off by clicking on the Green area to generate the map. Avoid the bugling!.</p>"
+                        dialogNode.innerHTML = "<p style='font-size: 17px; margin-top: 10px; margin-left: 10px;'>Start off by clicking on the Green area to generate the map. Avoid the bugling!</p>"
                         nextBtn4.remove();
                         let nextBtn5 = document.createElement("button")
                         nextBtn5.innerHTML = "CLOSE"
@@ -515,10 +515,7 @@
             hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
         
             for(let i = 0; i < codeLines.length; i++) {
-                if(codeLines[i].trim() == "") {
-                    codeLines.splice(i, 1);
-                    i--;
-                }
+               
            setTimeout(() => {
              let codeLine = codeLines[i].trim();
             if(codeLine.trim() === codeGlossary.left) {
@@ -604,7 +601,7 @@
                             }, 1500);
                         }
                     }
-                    else { alert("Your code must be less than 7 lines. Empty lines aren't counted")}
+                    else { alert("Your code must be less than 7 lines. Empty lines do count")}
                 }
             }
         function checkIfBuglingIsReached() {
@@ -649,26 +646,23 @@
             divNode.style.transform = "scale(0)"
             setTimeout(() => {
                 divNode.remove()
-                localStorage.setItem("userLevelCODING", 2)
+                if(Number(localStorage.getItem("userLevelCODING")) > userCurrentLevel.textContent) {
+                    alert(localStorage.getItem("userLevelCODING"))
+                }
+                else {
+                    if(Number(localStorage.getItem("userLevelCODING")) == 0) {
+                           localStorage.setItem("userLevelCODING", 2)
+                    }
+                    else {
+                        localStorage.setItem("userLevelCODING", (Number(localStorage.getItem("userLevelCODING")) + 1) || 2)
+                    }
+                    alert(localStorage.getItem("userLevelCODING"))
+                }
                 location.reload()
             }, 450);
         }, 2500);
        
     }
-
-    function checkStorage() {
-        if(localStorage.getItem("userLevelCODING") == 2) {
-            playBtn2.disabled = false
-            playBtn2.style.filter = "brightness(100%)"
-            playBtn2.style.cursor = "pointer"
-        }
-        else if(localStorage.getItem("userLevelCODING") == 3) {
-            playBtn3.disabled = false
-            playBtn3.style.filter = "brightness(100%)"
-            playBtn3.style.cursor = "pointer"
-        }
-    }
-    checkStorage()
 
 
     function playLevel2() {
@@ -752,7 +746,7 @@
                                                                     nextBtn22.addEventListener("click", () => {
                                                                         dialogNode.remove()
                                                                         setTimeout(() => {
-                                                                            document.body.style.backgroundImage = "url('https://i.ibb.co/9mhssq4f/background1.jpg')"
+                                                                            document.body.style.backgroundImage = "url('https://img.freepik.com/premium-vector/vector-illustration-mountain-landscape-winter_719015-46.jpg')"
                                                                              document.body.style.backgroundPositionY = "-95px"
                                                                         }, 1525);
 
@@ -787,9 +781,9 @@
                                                                              nextBtnn2.addEventListener("click", () => {
                                                                                 pNode.innerHTML = "I've already taught you the basic functions. step(), turnLeft(), turnRight(), turnUp(), turnDown()."
                                                                                 nextBtnn2.addEventListener("click", () => {
-                                                                                    pNode.innerHTML = " Now, you can write numbers inside the parentheses to indicate how many times does the function need to be executed. We'll call that number a parameter."
+                                                                                    pNode.innerHTML = "Now, you can write numbers inside the parentheses to indicate how many times does the function need to be executed. We'll call that number a parameter."
                                                                                     nextBtnn2.addEventListener("click", () => {
-                                                                                     pNode.innerHTML = " We're going this direction because I'm sure I saw a scroll over there. Your goal is to reach that scroll with maximum 6 lines of code."
+                                                                                     pNode.innerHTML = "We're entering a new city in the Never Realm, so you have to pass a code barrier. Your goal is to reach the scroll over there with maximum 6 lines of code."
                                                                                     nextBtnn2.addEventListener("click", () => {
                                                                                         pNode.innerHTML = "You'll use parameters in step(). For example, step(3) will make move 3 steps. Start off by clicking the green area to generate the map."
                                                                                         nextBtnn2.innerHTML = "CLOSE"
@@ -857,6 +851,32 @@
         }, 3000);
 
     }
+
+
+
+    function checkStorage() {
+    const level = parseInt(localStorage.getItem("userLevelCODING"))
+
+    if (level >= 2) {
+        playBtn2.disabled = false
+        playBtn2.style.filter = "brightness(100%)"
+        playBtn2.style.cursor = "pointer"
+    }
+    if (level >= 3) {
+        playBtn3.disabled = false
+        playBtn3.style.filter = "brightness(100%)"
+        playBtn3.style.cursor = "pointer"
+    }
+    // Add more levels if needed
+    if (level >= 4) {
+        playBtn4.disabled = false
+        playBtn4.style.filter = "brightness(100%)"
+        playBtn4.style.cursor = "pointer"
+    }
+    }
+
+    checkStorage()
+
 
   </script>
 </body>
