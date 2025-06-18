@@ -69,6 +69,7 @@
             height: 100%;
             border: 0.1px solid rgba(0, 0, 0, 0.377);
             box-sizing: border-box;
+            transition: 0.3s ease all;
         }	
 
         .playBtn {
@@ -144,6 +145,18 @@
             }
             100% {
                 transform: scale(0.12);
+            }
+        }
+
+        @keyframes corruptEnergyG {
+            0% {
+                transform: scale(0.095);
+            }
+            50% {
+                transform: scale(0.115);
+            }
+            100% {
+                transform: scale(0.095);
             }
         }
 
@@ -302,7 +315,8 @@
         left: "turnLeft()",
         right: "turnRight()",
         up: "turnUp()",
-        down: "turnDown()"
+        down: "turnDown()",
+        drain: "drain()"
 
     }
 
@@ -531,6 +545,16 @@
             if(userCurrentLevel.textContent == 2) {
                 currentPosition = 63
             }
+            else if(userCurrentLevel.textContent == 3) {
+                currentPosition = 63;
+                document.querySelectorAll(".backgroundCellDiv").forEach(div => {
+                     const child = div.firstElementChild;    
+                 if (child && child.getAttribute("src")?.includes("corrupt-En")) {
+                    child.style.display = "block";
+                     div.style.backgroundColor = "#b33c62"
+                }
+             });
+            }
             let codeLines = document.getElementById("textarea").value.split("\n"); // Starting position of the fox
             hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
         
@@ -592,7 +616,17 @@
                         stepFn()
                     }
             }
-
+            else if(codeLine.trim() === codeGlossary.drain) {
+                document.querySelectorAll(".backgroundCellDiv").forEach(div => {
+                  if(div.getAttribute("id") == currentPosition) {
+                     const child = div.firstElementChild;
+                     if (child) {
+                     child.style.display = "none";
+                     div.style.backgroundColor = "rgb(85, 161, 78)"
+                   }
+                 }
+             });
+            }
             console.log(currentPosition)
             checkIfBuglingIsReached()
             checkIfAppleIsReached()
@@ -832,7 +866,7 @@
                                                                                                 divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
                                                                                             }
                                                                                             if( validValues.includes(i)) {
-                                                                                                divNode.setAttribute("class", "wallCellDiv")
+                                                                                                divNode.setAttribute("class", "backgroundCellDiv")
                                                                                             }
                                                                                             if( i == 47) {
                                                                                                 divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -212px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8194/8194907.png">`
@@ -973,7 +1007,7 @@ setTimeout(() => {
                                                                 divNode.style.opacity = "0"
                                                                 setTimeout(() => {
                                                                     fullContainer1.style.display = "grid"
-                                                                    userCurrentLevel.textContent = 2
+                                                                    userCurrentLevel.textContent = 3
                                                                     let imgNode = document.createElement("img")
                                                                     imgNode.src = "https://i.ibb.co/RGS4pphj/hbMaster.png"
                                                                     imgNode.style = "width: 35%; position: absolute; margin-top: -275px; margin-left: -5px; transform: rotateY(180deg); "
@@ -1012,18 +1046,20 @@ setTimeout(() => {
                                                                                 for(let i = 0; i < 64; i++) {  
                                                                                     let divNode = document.createElement("div")
                                                                                     divNode.setAttribute("class", "backgroundCellDiv")
+                                                                                    divNode.setAttribute("id", i)
                                                                                     if(i == 63) {
-                                                                                        divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/v6gP0Ktf/hb.png">`
+                                                                                        divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/dwCZFXKc/hbGold.png">`
                                                                                     }
-                                                                                    if( validValues.includes(i)) {
-                                                                                        divNode.setAttribute("class", "wallCellDiv")
+                                                                                    if(validValues.includes(i)) {
+                                                                                        divNode.setAttribute("class", "backgroundCellDiv")
                                                                                     }
-                                                                                    if( i == 47) {
-                                                                                        divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -212px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/8194/8194907.png">`
+                                                                                    if( i == 9) {
+                                                                                        divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -214px; margin-top: -190px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/M55z7jGP/cagePng.png">`
                                                                                     }
-                                                                                    let buglingDiv = [52, 53, 54, 55]
+                                                                                    let buglingDiv = [61, 53, 54, 55]
                                                                                     if(buglingDiv.includes(i)) {
-                                                                                        divNode.innerHTML = `<img class="buglingImg" style="transform: scale(0.12); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/rGRJHNQB/bugling.png">`
+                                                                                        divNode.innerHTML = `<img class="buglingImg" style="transform: scale(0.095); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease; animation: corruptEnergyG 2s infinite;" alt="r" src="https://i.ibb.co/jk4n1ypY/corrupt-En.png">`
+                                                                                        divNode.style.backgroundColor = "#b33c62"
                                                                                     }
                                                                                     map1.appendChild(divNode);
                                                                                 }
@@ -1088,7 +1124,7 @@ setTimeout(() => {
 
             if (isHolding) {
                 if (currentScale < maxScale) {
-                    currentScale += 0.3;
+                    currentScale += 0.4;
                 }
             } else {
                 if (currentScale > minScale) {
@@ -1111,7 +1147,7 @@ setTimeout(() => {
                         setTimeout(() => {
                             dialogNode.remove()
                             blackOutDiv.remove()
-                        }, 1500);
+                        }, 2500);
                     }, 510);
                 }, 750);
             }
