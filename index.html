@@ -223,7 +223,7 @@
        
         </div>
         <div id="code1" style="width: 80%; background-color: rgb(218, 218, 218); margin-left: 20%; " >
-            <div style="width: 100%; height: 100px; background-color: rgb(192, 192, 192); overflow-x: scroll;  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; overflow-y: hidden; ">
+            <div style="width: 100%; height: 100px; background-color: rgb(192, 192, 192); overflow-x: scroll;  display: grid; grid-template-columns: repeat(8, 1fr); overflow-y: hidden; ">
               
               <div onclick="textarea.value += '\n' + 'step()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); 
                height: 55px; cursor: pointer; ">
@@ -250,6 +250,11 @@
                  <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/21/21178.png" alt="">
                  <p style="color: rgb(19, 87, 58); margin-top: -10px; font-weight: 500;  font-size: 15px ; margin-left: -5px;"> turnDown</p>
                </div>
+
+               <div id="addLineToCodeDrainBtn" onclick="textarea.value += '\n' + 'drain()'" style="border-radius: 20px; width: 60px; border: 1px solid rgb(17, 17, 17); padding: 10px; transform: scale(0.8); background-color: rgb(239, 246, 250); height: 55px; cursor: pointer; display: none;">
+                <img style="width: 75%; margin-left: 7px;" src="https://cdn-icons-png.flaticon.com/512/1825/1825451.png" alt="">
+                <p style="color: rgb(19, 87, 58); margin-top: -10px; font-weight: 500;  font-size: 15px; text-align: center;"> drain</p>
+              </div>
             </div>
 
             <input id="codeInp1" placeholder="Code" type="text" style="width: 65%; height: 40px;  border-radius: 8px; border: 1px solid black; 
@@ -527,7 +532,7 @@
 
  
 
-    function addLineToCode() {
+       function addLineToCode() {
         document.getElementById("textarea").value =  document.getElementById("textarea").value + "\n"  + document.getElementById("codeInp1").value ;
         document.getElementById("codeInp1").value = "";
     }
@@ -541,8 +546,14 @@
         const validValues = [...rightBorder, ...leftBorder, ...topBorder, ...bottomBorder];
      
         let currentPosition = 60
-    function runCodeFn() {
-            if(userCurrentLevel.textContent == 2) {
+
+        function runCodeFn() {
+            let buglingWasReached = false;
+
+            if(userCurrentLevel.textContent == 1) {
+                currentPosition = 60
+            }
+            else if(userCurrentLevel.textContent == 2) {
                 currentPosition = 63
             }
             else if(userCurrentLevel.textContent == 3) {
@@ -555,7 +566,9 @@
                 }
              });
             }
+          
             let codeLines = document.getElementById("textarea").value.split("\n"); // Starting position of the fox
+            
             hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
         
             for(let i = 0; i < codeLines.length; i++) {
@@ -613,7 +626,9 @@
 
                     let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
                     for(let i = 0; i < stepParameter - 1; i++) {
-                        stepFn()
+                       setTimeout(() => {
+                         stepFn()
+                       }, i * 50);
                     }
             }
             else if(codeLine.trim() === codeGlossary.drain) {
@@ -627,54 +642,76 @@
                  }
              });
             }
+          
+          
             console.log(currentPosition)
-            checkIfBuglingIsReached()
+            if (!buglingWasReached && checkIfBuglingIsReached()) {
+                buglingWasReached = true;
+                alert("You've been caught!");
+                return;
+            }
+
             checkIfAppleIsReached()
             
            }, i * 350);
           
+
         }
 
-            function checkIfAppleIsReached() {
+      
 
+        function checkIfAppleIsReached() {
+            if (buglingWasReached) return;
                 if(userCurrentLevel.textContent == 1) {
-                    if(currentPosition == 35) {
+                    if(currentPosition == 35 && checkIfBuglingIsReached() == false) {
                         appleImg1.style.transform = "scale(0.02)"
                        setTimeout(() => {
                         passLevelDialog()
                        }, 1500);
                     }
-                   
+                
                 }
-                else if(userCurrentLevel.textContent == 2)  {
-                    if(codeLines.length <= 6) {
-                        if(currentPosition == 47) {
+                else if(userCurrentLevel.textContent == 2 )  {
+                    if(codeLines.length <= 6 ) {
+                            if(currentPosition == 47) {
                             appleImg1.style.transform = "scale(0.02)"
                             setTimeout(() => {
                                 passLevelDialog()
                             }, 1500);
+                            
                         }
                     }
-                    else { alert("Your code must be less than 7 lines. Empty lines do count")}
+                    else { wrongLinesDialog("7")}
                 }
             }
         function checkIfBuglingIsReached() {
         if(userCurrentLevel.textContent == 1) {
             if(currentPosition == 52) {
-                alert("You've been caught by the bugling!")
                 hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+                return true;
+            }
+            else {
+                return false;
             }
         }
         else if(userCurrentLevel.textContent == 2) {
             let buglingDiv = [55, 54, 53, 52]
             if(buglingDiv.includes(currentPosition)) {
-                alert("You've been caught by the bugling!")
                 hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
+                buglingWasReached = true;
+                return true;
+            }
+            else {
+                buglingWasReached = false;
+                return false;
             }
         }   
+        else if(userCurrentLevel.textContent == 3) {
+      
+        }
     }
    
-    }
+       }
 
 
 
@@ -718,7 +755,33 @@
        
     }
 
+    function wrongLinesDialog(a) {
+        let divNode = document.createElement("div")
+        divNode.style = "width: 15%; background-color: #ea3838; height: 120px; position: absolute; transition: all 0.4s ease; margin-left: 35%; margin-top: -400px; border-radius: 6px; border: 1px solid black; transform: scale(0)"
+        divNode.innerHTML = "<p class='wrongLinesDialogText' style='font-size: 23px; color: white; font-weight: 500;'></p>"
 
+       setTimeout(() => {
+        document.body.appendChild(divNode)
+        document.querySelectorAll(".wrongLinesDialogText").forEach(p => {
+            p.textContent = "Your code must be less than " + a + " lines. Empty lines do count"
+        })
+
+       }, 500);
+        setTimeout(() => {
+            divNode.style.transform = "scale(1)"
+        }, 10);
+        setTimeout(() => {
+            divNode.style.transform = "scale(0)"  
+            divNode.remove()       
+        }, 2500);
+       
+    }
+
+
+
+
+
+    
     function playLevel2() {
 
         let dialogNode = document.createElement("dialog")
@@ -800,8 +863,8 @@
                                                                     nextBtn22.addEventListener("click", () => {
                                                                         dialogNode.remove()
                                                                         setTimeout(() => {
-                                                                            document.body.style.backgroundImage = "url('https://img.freepik.com/premium-vector/vector-illustration-mountain-landscape-winter_719015-46.jpg')"
-                                                                             document.body.style.backgroundPositionY = "-95px"
+                                                                            document.body.style.backgroundImage = "url('https://png.pngtree.com/background/20230417/original/pngtree-winter-woods-snow-scene-illustration-picture-image_2445808.jpg')"
+                                                                             document.body.style.backgroundPositionY = "-120px"
                                                                         }, 1525);
 
                                                                         let divNode = document.createElement("div")
@@ -991,8 +1054,8 @@ setTimeout(() => {
                                                       nextBtn333.addEventListener("click", () => {
                                                                 dialogNode.remove()
                                                                 setTimeout(() => {
-                                                                    document.body.style.backgroundImage = "url('https://img.freepik.com/premium-vector/vector-illustration-mountain-landscape-winter_719015-46.jpg')"
-                                                                     document.body.style.backgroundPositionY = "-95px"
+                                                                    document.body.style.backgroundImage = "url('https://png.pngtree.com/background/20230412/original/pngtree-winter-night-snow-scene-illustration-background-picture-image_2397691.jpg')"
+                                                                     document.body.style.backgroundPositionY = "-120px"
                                                                 }, 1525);
 
                                                                 let divNode = document.createElement("div")
@@ -1008,6 +1071,8 @@ setTimeout(() => {
                                                                 setTimeout(() => {
                                                                     fullContainer1.style.display = "grid"
                                                                     userCurrentLevel.textContent = 3
+                                                                    addLineToCodeDrainBtn.style.display = "block"
+
                                                                     let imgNode = document.createElement("img")
                                                                     imgNode.src = "https://i.ibb.co/RGS4pphj/hbMaster.png"
                                                                     imgNode.style = "width: 35%; position: absolute; margin-top: -275px; margin-left: -5px; transform: rotateY(180deg); "
@@ -1178,6 +1243,11 @@ setTimeout(() => {
 
 
 
+    document.addEventListener("keydown", (e) => {
+        if(e.key == "Enter") {
+            runCodeFn()
+        }
+    })
     function checkStorage() {
     const level = parseInt(localStorage.getItem("userLevelCODING"))
 
