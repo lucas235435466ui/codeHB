@@ -291,13 +291,14 @@
         </div>
         <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px;
          box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(120, 106, 160), rgb(145, 84, 135));">
-            <p class="levelText">LEVEL 3</p>
+                <p style="position: absolute; margin-top: 4px; margin-left: 10px; font-size: 12px;">  drain()</p>
+                <p class="levelText">LEVEL 3</p>
                 <button onclick="playLevel3()" disabled id="playBtn3" class="playBtn">PLAY</button>
         </div>
         <div style="width: 70%; background-color: #d1d1d100; height: 200px; margin-left: 15%; margin-top: 45%; border-radius: 10px; 
         box-shadow: black 5px 5px 25px; background-image: linear-gradient(to bottom, rgb(184, 111, 111), rgb(163, 119, 89));">
             <p class="levelText">LEVEL 4</p>
-                <button disabled class="playBtn">PLAY</button>
+                <button onclick="playLevel4()" id="playBtn4" disabled class="playBtn">PLAY</button>
         </div>
     </div>
 
@@ -325,7 +326,15 @@
 
     }
 
+    
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        function sleep2(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
+    
         function changeDialog(text) {
            
            let aT = [ "It was kept in balance by 7 ancient Dragon Cores. Each one held the power of a Source Dragon:  Motion, Energy, Life, Strength, Flow, Unity, and Balance. They were made to be impossible to break or move out of place with any of this world's power.",
@@ -547,25 +556,45 @@
      
         let currentPosition = 60
 
-        function runCodeFn() {
+       async function runCodeFn() {
+            let ifConditionVar = false
+            let wasLevel3KeyReached = false;
+
             let buglingWasReached = false;
 
-            if(userCurrentLevel.textContent == 1) {
-                currentPosition = 60
+            switch(Number(userCurrentLevel.textContent)) {
+                case 1:
+                      currentPosition = 60
+                break;
+                case 2: 
+                     currentPosition = 63
+                break;
+                case 3: 
+                    currentPosition = 63;
+                    appleImg2.style.display = "block"
+                    appleImg2.style.transform = "scale(0.12)"
+                    document.querySelectorAll(".backgroundCellDiv").forEach(div => {
+                        const child = div.firstElementChild;    
+                    if (child && child.getAttribute("src")?.includes("corrupt-En")) {
+                        child.style.display = "block";
+                        div.style.backgroundColor = "#b33c62"
+                    }
+                    });
+                break;
+                case 4:
+                    currentPosition = 51;
+                    appleImg2.style.display = "block"
+                    appleImg2.style.transform = "scale(0.12)"
+                    document.querySelectorAll(".backgroundCellDiv").forEach(div => {
+                        const child = div.firstElementChild;    
+                    if (child && child.getAttribute("src")?.includes("corrupt-En")) {
+                        child.style.display = "block";
+                        div.style.backgroundColor = "#b33c62"
+                    }
+                   });
+                break;
             }
-            else if(userCurrentLevel.textContent == 2) {
-                currentPosition = 63
-            }
-            else if(userCurrentLevel.textContent == 3) {
-                currentPosition = 63;
-                document.querySelectorAll(".backgroundCellDiv").forEach(div => {
-                     const child = div.firstElementChild;    
-                 if (child && child.getAttribute("src")?.includes("corrupt-En")) {
-                    child.style.display = "block";
-                     div.style.backgroundColor = "#b33c62"
-                }
-             });
-            }
+          
           
             let codeLines = document.getElementById("textarea").value.split("\n"); // Starting position of the fox
             
@@ -573,96 +602,175 @@
         
             for(let i = 0; i < codeLines.length; i++) {
                
-           setTimeout(() => {
-             let codeLine = codeLines[i].trim();
-            if(codeLine.trim() === codeGlossary.left) {
+              let codeLine = codeLines[i].trim();
+              if(ifConditionVar == false) {
+                if(codeLine.trim() === codeGlossary.left) {
                 hbImg1.style.transform = "scale(0.15) rotate(-90deg)";
             }
-            else if(codeLine.trim() === codeGlossary.right) {
-                hbImg1.style.transform = "scale(0.15) rotate(90deg)";
-            }
-            else if(codeLine.trim() === codeGlossary.down) {
-                hbImg1.style.transform = "scale(0.15) rotate(180deg)";
-            }
-            else if(codeLine.trim() === codeGlossary.up) {
-                hbImg1.style.transform = "scale(0.15) rotate(0deg)";
-            }
-            else if(codeLine.trim().startsWith("step(") && codeLine.trim().endsWith(")")) {
-                   function stepFn() {
-                    if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
-                        if( !leftBorder.includes(currentPosition)) {
-                            currentPosition = currentPosition - 1;
-                        hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) - 70) + "px"
-                        }
+                else if(codeLine.trim() === codeGlossary.right) {
+                    hbImg1.style.transform = "scale(0.15) rotate(90deg)";
+                }
+                else if(codeLine.trim() === codeGlossary.down) {
+                    hbImg1.style.transform = "scale(0.15) rotate(180deg)";
+                }
+                else if(codeLine.trim() === codeGlossary.up) {
+                    hbImg1.style.transform = "scale(0.15) rotate(0deg)";
+                }
+                else if(codeLine.trim().startsWith("step(") && codeLine.trim().endsWith(")")) {
+                    function stepFn() {
+                        if(hbImg1.style.transform.includes("rotate(-90deg)") ) {
+                            if( !leftBorder.includes(currentPosition)) {
+                                currentPosition = currentPosition - 1;
+                            hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) - 70) + "px"
+                            }
 
+                            
+                        }
+                        else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
+                            if( !rightBorder.includes(currentPosition)) {
+                                currentPosition = currentPosition + 1
+                                hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
+                            }
+                        }
+                        else if(hbImg1.style.transform == "scale(0.15) rotate(180deg)") {
+                            if(!bottomBorder.includes(currentPosition)) {
+                                currentPosition = currentPosition + 8
+                                hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) + 87) + "px"
+                            }                    
+                        }
+                        else if(hbImg1.style.transform == "scale(0.15) rotate(0deg)") {
+                            if(!topBorder.includes(currentPosition)) {
+                                currentPosition = currentPosition - 8
+                                hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                            }
+                        }               
+                        else {
+                            if(!topBorder.includes(currentPosition)) {
+                                currentPosition = currentPosition - 8
+                                hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
+                            }
+                        }
+                        if (checkIfBuglingIsReached()) {
+                        if(userCurrentLevel.textContent == 3)  {
+                            if(codeLines[i + 1]) {
+                            if(codeLines[i + 1].trim() != "drain()") {
+                                buglingWasReached = true;
+                                alert("You've been caught!");
+                                return;
+                            }
+                            else if( codeLines[i + 1].trim() == "drain()") {
+                                buglingWasReached = false;
+                            }
+                        }
+                        else if(!codeLines[i + 1]) {
+                                buglingWasReached = true;
+                                alert("You've been caught!");
+                                return;
+                        }
                         
-                    }
-                    else if(hbImg1.style.transform == "scale(0.15) rotate(90deg)") {
-                        if( !rightBorder.includes(currentPosition)) {
-                            currentPosition = currentPosition + 1
-                            hbImg1.style.marginLeft = (Number(hbImg1.style.marginLeft.replace("px", "")) + 70) + "px"
+                            }
+                        else {
+                            buglingWasReached = true;
+                            alert("You've been caught!");
+                            return;
                         }
-                    }
-                    else if(hbImg1.style.transform == "scale(0.15) rotate(180deg)") {
-                        if(!bottomBorder.includes(currentPosition)) {
-                            currentPosition = currentPosition + 8
-                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) + 87) + "px"
-                        }                    
-                    }
-                    else if(hbImg1.style.transform == "scale(0.15) rotate(0deg)") {
-                        if(!topBorder.includes(currentPosition)) {
-                            currentPosition = currentPosition - 8
-                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
                         }
-                    }               
-                    else {
-                        if(!topBorder.includes(currentPosition)) {
-                            currentPosition = currentPosition - 8
-                            hbImg1.style.marginTop = (Number(hbImg1.style.marginTop.replace("px", "")) - 87) + "px"
-                        }
-                    }
-                   }     
-                   stepFn()
 
-                    let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
-                    for(let i = 0; i < stepParameter - 1; i++) {
-                       setTimeout(() => {
-                         stepFn()
-                       }, i * 50);
-                    }
-            }
-            else if(codeLine.trim() === codeGlossary.drain) {
+
+                    }     
+                    stepFn()
+
+                        let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
+                        for(let i = 0; i < stepParameter - 1; i++) {
+                            stepFn()
+                            await sleep(100);
+                        }
+                }
+                else if(codeLine.trim() === codeGlossary.drain) {
+              function drain() {
                 document.querySelectorAll(".backgroundCellDiv").forEach(div => {
                   if(div.getAttribute("id") == currentPosition) {
                      const child = div.firstElementChild;
                      if (child) {
+                    if(child.getAttribute("src") == "https://i.ibb.co/jk4n1ypY/corrupt-En.png") {
                      child.style.display = "none";
                      div.style.backgroundColor = "rgb(85, 161, 78)"
+                    }
                    }
                  }
-             });
+                  });
+               }
+               drain()
             }
-          
-          
-            console.log(currentPosition)
-            if (!buglingWasReached && checkIfBuglingIsReached()) {
-                buglingWasReached = true;
-                alert("You've been caught!");
-                return;
+             }         
+              
+              if(codeLine.trim().startsWith("if(") && codeLine.includes("){")) {
+                ifConditionVar = true
+                let ifCondition = codeLine.split("(")[1].replaceAll(' ', '')
+                async function allFunctions(insideLine) {
+                            if(insideLine === "drain()") {
+                            drain()
+                            }
+                            else if(insideLine.startsWith("step(") && insideLine.endsWith(")")) {
+                            stepFn()  
+                            let stepParameter = Number(codeLine.split("(")[1].split(")")[0])
+                            for(let i = 0; i < stepParameter - 1; i++) {
+                                stepFn()
+                                await sleep(100);
+                            }
+                         }
+                            else if(insideLine === "turnUp()") {
+                            hbImg1.style.transform = "scale(0.15) rotate(0deg)";
+                         }
+                            else if(insideLine === "turnDown()") {
+                            hbImg1.style.transform = "scale(0.15) rotate(180deg)";
+                         }
+                            else if(insideLine === "turnLeft()") {
+                            hbImg1.style.transform = "scale(0.15) rotate(-90deg)";
+                         }
+                            else if(insideLine === "turnRight()") {
+                             hbImg1.style.transform = "scale(0.15) rotate(90deg)";
+                         }      
+                         }
+                         
+               if(ifCondition === "position==corrupted){") {
+                    if(document.getElementById(currentPosition).innerHTML) {
+                        if( document.getElementById(currentPosition).firstElementChild &&
+                             document.getElementById(currentPosition).firstElementChild.src.includes("corrupt-En")) {
+                            for (let k = i + 1; k < codeLines.length; k++) {
+                         let insideLine = codeLines[k].trim()
+                         if(insideLine == "}") {
+                            break;
+                        }                     
+                         allFunctions(codeLines[i +1].trim())
+                         await sleep2(150)
+                         k = k + 1
+
+                        }
+                        }
+                          
+                        else {
+                             alert("d")
+                        }
+                    }
+                    else {
+                        alert("f")
+                    }
+                       
+                    }
+            }          
+              console.log(currentPosition)
+        
+              checkIfAppleIsReached()
+              await sleep(450);
+
             }
-
-            checkIfAppleIsReached()
-            
-           }, i * 350);
-          
-
-        }
 
       
 
-        function checkIfAppleIsReached() {
+        function checkIfAppleIsReached() {  
             if (buglingWasReached) return;
-                if(userCurrentLevel.textContent == 1) {
+            if(userCurrentLevel.textContent == 1) {
                     if(currentPosition == 35 && checkIfBuglingIsReached() == false) {
                         appleImg1.style.transform = "scale(0.02)"
                        setTimeout(() => {
@@ -671,11 +779,11 @@
                     }
                 
                 }
-                else if(userCurrentLevel.textContent == 2 )  {
-                    if(codeLines.length <= 6 ) {
-                            if(currentPosition == 47) {
-                            appleImg1.style.transform = "scale(0.02)"
-                            setTimeout(() => {
+            else if(userCurrentLevel.textContent == 2 )  {
+                if(codeLines.length <= 6 ) {
+                     if(currentPosition == 47 && !buglingWasReached) {
+                        appleImg1.style.transform = "scale(0.02)"
+                        setTimeout(() => {
                                 passLevelDialog()
                             }, 1500);
                             
@@ -683,6 +791,27 @@
                     }
                     else { wrongLinesDialog("7")}
                 }
+            else if(userCurrentLevel.textContent == 3) {
+                if(codeLines.length <= 8)  {
+                    if(currentPosition == 56) {
+                   appleImg2.style.transform = "scale(0.02)"
+                   setTimeout(() => {
+                      appleImg2.style.display = "none"
+                   }, 500);
+                   wasLevel3KeyReached = true;
+                }
+                if(currentPosition == 9) {
+                    if(wasLevel3KeyReached && !buglingWasReached) {
+                        appleImg1.style.transform = "scale(0.02)"
+                        setTimeout(() => {
+                                passLevelDialog()
+                        }, 1500);
+                     }
+                    }
+                }
+                else { wrongLinesDialog("8")}
+
+            }
             }
         function checkIfBuglingIsReached() {
         if(userCurrentLevel.textContent == 1) {
@@ -699,6 +828,7 @@
             if(buglingDiv.includes(currentPosition)) {
                 hbImg1.style = "transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;"
                 buglingWasReached = true;
+                currentPosition = 0
                 return true;
             }
             else {
@@ -707,7 +837,12 @@
             }
         }   
         else if(userCurrentLevel.textContent == 3) {
-      
+            let energyDiv = [61, 53, 54, 55]
+            if(energyDiv.includes(currentPosition)) {
+               buglingWasReached = true;
+               return true;
+            }
+           
         }
     }
    
@@ -776,11 +911,6 @@
         }, 2500);
        
     }
-
-
-
-
-
     
     function playLevel2() {
 
@@ -969,8 +1099,7 @@
 
     }
 
-
-   function playLevel3() {
+    function playLevel3() {
 
 let dialogNode = document.createElement("dialog")
   dialogNode.style = "width: 35%; height: 145px; background-color: rgb(161, 176, 194); position: absolute; display: block; margin-top: 420px; margin-left: 505px; border-radius: 8px; box-shadow: black 5px 5px 25px;"
@@ -1041,7 +1170,6 @@ setTimeout(() => {
                                
                                     nextBtn33.addEventListener("click", () => {
                                     level3DrainTechnique()
-                                    dialogText2.textContent = 'That was truly amazing. You have succesfully unlocked the new form. Now, let\'s keep going'
                                     nextBtn33.remove()
                                     let nextBtn333 = document.createElement("button")
                                     nextBtn333.style = "background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black;  font-size: 18px;  letter-spacing: 0.7px; margin-left: 10px; margin-top: 5px; transition: all 0.3s ease; cursor: pointer"
@@ -1089,12 +1217,15 @@ setTimeout(() => {
                                                                     nextBtnn3.innerHTML +="NEXT"
                                                                     
                                                                     nextBtnn3.addEventListener("click", () => {
-                                                                        pNode.innerHTML = "Use it to clear out corrupt energy from a specific zone to keep going on."
+                                                                        pNode.innerHTML = "Use it to clear out corrupt energy from a specific zone to keep going on. To do so, first you need to step on the block with the corrupt energy, and then write drain() in the console. "
                                                                         nextBtnn3.addEventListener("click", () => {
-                                                                            pNode.innerHTML = "Your goal is to reach that cage over there, where my teammate is trapped. Good luck. Start off by clicking the green area."
+                                                                            pNode.innerHTML = "You have 2 goals: 1) Reach the key in the bottom corner. 2) After obtaining the key, reach the cage over there, where my teammate is trapped."
                                                                             nextBtnn3.addEventListener("click", () => {
+                                                                               pNode.innerHTML = "The max. lines you'll use is 8. Start off by clicking the green area. Good luck." 
+                                                                               nextBtnn3.addEventListener("click", () => {
                                                                                 dialogNode.remove()
                                                                                 imgNode.remove()                                                                        
+                                                                               })
                                                                             })
                                                                         })
                                                                     })
@@ -1119,7 +1250,10 @@ setTimeout(() => {
                                                                                         divNode.setAttribute("class", "backgroundCellDiv")
                                                                                     }
                                                                                     if( i == 9) {
-                                                                                        divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -214px; margin-top: -190px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/M55z7jGP/cagePng.png">`
+                                                                                        divNode.innerHTML = `<img id="appleImg1" style="transform: scale(0.12); position: absolute; margin-left: -285.5px; margin-top: -277px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/M55z7jGP/cagePng.png">`
+                                                                                    }
+                                                                                    if(i == 56) {
+                                                                                        divNode.innerHTML = `<img id="appleImg2" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -212px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/4382/4382320.png">`
                                                                                     }
                                                                                     let buglingDiv = [61, 53, 54, 55]
                                                                                     if(buglingDiv.includes(i)) {
@@ -1153,7 +1287,6 @@ setTimeout(() => {
 }, 3000);
 
 }
-
     function level3DrainTechnique() {
 
         let blackOutDiv = document.createElement("div")
@@ -1209,7 +1342,9 @@ setTimeout(() => {
                         }
                         amountDragonLevel3++
                         div.remove()
+
                         setTimeout(() => {
+                            dialogText2.textContent = 'That was truly amazing. You have succesfully unlocked the new form. Now, let\'s keep going'
                             dialogNode.remove()
                             blackOutDiv.remove()
                         }, 2500);
@@ -1239,15 +1374,163 @@ setTimeout(() => {
 
     }
 
+    function playLevel4() {
+
+        let dialogNode = document.createElement("dialog")
+        dialogNode.style = "width: 35%; height: 145px; background-color: rgb(161, 176, 194); position: absolute; display: block; margin-top: 420px; margin-left: 505px; border-radius: 8px; box-shadow: black 5px 5px 25px;"
+        dialogNode.innerHTML = "<p id='badgerText' style='color: white; font-size: 22px; font-weight: 500; margin-top: -50px; margin-left: 285px; position: absolute;  '> Badger</p>"
+        dialogNode.innerHTML += "<img style='width: 105%; height: 100%; position: absolute; margin-top: -90px; margin-left: -40px; ' src='https://static.vecteezy.com/system/resources/thumbnails/027/187/944/small/gold-and-luxury-under-line-png.png' alt=''>"
+        dialogNode.innerHTML += "<p id='dialogText3' style='font-size: 19px; '> Well done! You've freed my teammate. From now on, he\'ll be your guide while I try to get you a full map of the merged realms. His name is Ashmane.</p>"
+        dialogNode.innerHTML += "<button id='nextBtn3' style='background-color: #4c6094ea; color: white; width: 16%; height: 40px; border-radius: 8px; border: 0px solid black; font-size: 18px;  letter-spacing: 0.7px; margin-left: 20px;  margin-top: 5px; cursor: pointer; z-index: 2 '> NEXT</button>"
+        dialogNode.innerHTML += "<img id='badgerImg' style='position: absolute; margin-top: -350px; margin-left: -570px; transform: rotateY(180deg) scale(0.42); ' src='https://i.ibb.co/ZzW8Bmzt/hbImg2.png' alt='fassf'>"
+
+        blackOutDiv()
+        
+        setTimeout(() => {
+            levelsDiv.style.display = "none";
+            document.body.style.backgroundImage = "url('https://png.pngtree.com/background/20230417/original/pngtree-winter-blue-snow-mountain-picture-image_2445628.jpg')"
+            document.body.appendChild(dialogNode)
+            nextBtn3.addEventListener("click", () => {
+                 dialogText3.textContent = "Goodbye. I hope we can meet again soon."
+                nextBtn3.addEventListener("click", () => {                  
+                    if(badgerImg.src != "https://i.ibb.co/gbx9S3jq/lion.png") {
+                        blackOutDiv()
+                    }
+                    badgerImg.src = "https://i.ibb.co/gbx9S3jq/lion.png"
+                    badgerImg.style.transform = "scale(0.5) rotateY(180deg)"
+                    badgerText.textContent = "Ashmane"
+                    badgerText.style.marginLeft = "280px"
+                    dialogText3.textContent = "Hey there! It's great to finally meet you. I'm the Lion of Fire, and I'll be traveling with you through all the realms to recover the Dragon Cores."
+                    nextBtn3.addEventListener("click", () => {
+                        dialogText3.textContent = "I've spent a long time studying the Source Dragons with your master and the rest of our team. We believe there's one core hidden in each realm… though someone else might've gotten to one already."
+                        nextBtn3.addEventListener("click", () => {
+                            dialogText3.textContent = "Since The Merge, the team's been scattered. I haven't seen any of them, just your master. "
+                            nextBtn3.addEventListener("click", () => {
+                                dialogText3.textContent = "We're approaching the last city in the Never Realm before we cross into another realm. Let's stay sharp… and keep moving."
+                                nextBtn3.addEventListener("click", () => {
+                                    nextBtn3.addEventListener("click", () => {
+                                            dialogNode.remove()
+                                            blackOutDiv()
+                                            setTimeout(() => {
+                                                document.body.style.backgroundImage = "url('https://png.pngtree.com/background/20230417/original/pngtree-winter-trees-figures-snow-picture-image_2445288.jpg')"
+                                                 document.body.style.backgroundPositionY = "-120px"
+                                            }, 1525);
+                                             setTimeout(() => {
+                                                 fullContainer1.style.display = "grid"
+                                                 userCurrentLevel.textContent = 4
+                                                 addLineToCodeDrainBtn.style.display = "block"
+
+                                                 let imgNode = document.createElement("img")
+                                                 imgNode.src = "https://i.ibb.co/Lz54hRWv/lion-Teach.png"
+                                                 imgNode.style = "width: 35%; position: absolute; margin-top: -525px; margin-left: -25px; transform: rotateY(180deg) scale(0.45); "
 
 
+                                                 let dialogNode = document.createElement("div")
+                                                 let pNode = document.createElement("p")
+                                                 pNode.style = "font-size: 15px; margin-top: 10px; margin-left: 10px;"
+                                                 dialogNode.style = "width: 15%; height: 135px; position: absolute;  margin-top: -420px; margin-left: 290px; background-color: #a1b0c2; border-radius: 10px;"
+                                                 pNode.innerHTML = "Here, you'll learn to use an if/else statement. We use 'if' when we want to do something only if a certain condition is true and 'else', when that condition isn't true."
+                                                 
+                                                 let nextBtnn4 = document.createElement("button")
+                                                 nextBtnn4.style = "width: 30%; height: 30px; position: absolute; margin-top: 125px; margin-left: 185px; background-color: #4c6094ea; color: white; border-radius: 8px; border: 0px solid black; font-family: 'Poppins', 'sans-serif'; font-size: 17px;  letter-spacing: 0.7px; cursor: pointer; "
+                                                 nextBtnn4.innerHTML +="NEXT"
+                                                 
+                                                 nextBtnn4.addEventListener("click", () => {
+                                                     pNode.innerHTML = "You write it like:  if(x == y){ step() } else { turnUp() }  /// If x=y, it will execute step. If x ≠ y, it will turn up. Inside the brackets, you always put 2 equal signs(==)." 
+                                                     nextBtnn4.addEventListener("click", () => {
+                                                        pNode.innerHTML = "You'll use if(...) {...} to check if the block is corrupted, and if it is, use the function drain and step"                                                        
+                                                         nextBtnn4.addEventListener("click", () => {
+                                                            pNode.innerHTML = "This time, there are corrupted blocks on the map, but their positions will change randomly every time you run your code."
+                                                            nextBtnn4.addEventListener("click", () => {
+                                                             pNode.innerHTML = "That means you can't rely on memorizing their spots, you need to check if each block is corrupted as you go. If you use drain() when it's not needed, your whole code won't work."
+                                                             nextBtnn4.addEventListener("click", () => {
+                                                                pNode.innerHTML = "Hint: the corrupted energy will appear randomly in one of the yellow blocks, you'll start like this: if(position == corrupted) {...}  else{ step() }. Start off by clciking the map"
+                                                                nextBtnn4.innerHTML = "CLOSE"
+                                                                nextBtnn4.addEventListener("click", () => {
+                                                                    dialogNode.remove()
+                                                                    imgNode.remove() 
+                                                                    textarea.textContent = "if(position == corrupted){" + "\n" + "start writing here" + "\n" + "}"
+                                                                })
+                                                             })                                                                       
+                                                            })
+                                                         })
+                                                     })
+                                                 })
+                                                 
+                                                 dialogNode.appendChild(nextBtnn4)
+                                                 dialogNode.appendChild(pNode)
 
+                                                 document.body.appendChild(dialogNode)
+                                                 document.body.appendChild(imgNode)
+                                                 let amountsCellsAdd = 0
+                                                 document.getElementById("map1").addEventListener("click", () => {
+                                                     let currentPosition = 63
+                                                    if(amountsCellsAdd == 0) {
+                                                     let yellowBlocks = [11, 19, 27, 35, 43]
+                                                     let energyRandom4 = yellowBlocks[parseInt(Math.random() * yellowBlocks.length)]
 
-    document.addEventListener("keydown", (e) => {
-        if(e.key == "Enter") {
-            runCodeFn()
+                                                     for (let i = 0; i < 64; i++) {
+                                                        let divNode = document.createElement("div")
+                                                        divNode.setAttribute("class", "backgroundCellDiv")
+                                                        divNode.setAttribute("id", i)
+
+                                                        let wallDivs = [2, 4, 10, 12, 18, 20, 26, 28, 34, 36, 42, 44]
+                                                        if(wallDivs.includes(i)) {
+                                                            divNode.innerHTML ="<img style='transform: scale(0.15); position: absolute; margin-left: -223px; margin-top: -205px; transition: all 0.2s ease;' src='https://cdn-icons-png.flaticon.com/512/10809/10809503.png'>"
+                                                        }
+                                                        if (i == 51) {
+                                                            divNode.innerHTML = `<img id="hbImg1" style="transform: scale(0.15); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease;" alt="r" src="https://i.ibb.co/dwCZFXKc/hbGold.png">`
+                                                        }
+                                                        if (yellowBlocks.includes(i)) {
+                                                            divNode.style.backgroundColor = "#7ac273"
+                                                        }
+                                                        if (i == 3) {
+                                                            divNode.innerHTML = `<img id="appleImg2" style="transform: scale(0.12); position: absolute; margin-left: -220px; margin-top: -212px; transition: all 0.2s ease;" alt="r" src="https://cdn-icons-png.flaticon.com/512/4382/4382320.png">`
+                                                        }
+                                                        if (i == energyRandom4) {
+                                                            divNode.innerHTML = `<img class="buglingImg" style="transform: scale(0.095); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease; animation: corruptEnergyG 2s infinite;" alt="r" src="https://i.ibb.co/jk4n1ypY/corrupt-En.png">`
+                                                            divNode.style.backgroundColor = "#b33c62"
+                                                        }
+                                                        map1.appendChild(divNode)
+                                                    }
+
+                                                    // 🔽 Solo una vez, fuera del for
+                                                    runCodeBtn1.addEventListener("click", () => {
+                                                        // Limpiar el bloque anterior
+                                                        const oldBlock = document.getElementById(energyRandom4)
+                                                        oldBlock.innerHTML = ""
+                                                        oldBlock.style.backgroundColor = "#7ac273"
+
+                                                        // Generar nueva posición
+                                                        energyRandom4 = yellowBlocks[parseInt(Math.random() * yellowBlocks.length)]
+
+                                                        // Insertar imagen en nueva posición
+                                                        const newBlock = document.getElementById(energyRandom4)
+                                                        newBlock.innerHTML = `<img class="buglingImg" style="transform: scale(0.095); position: absolute; margin-left: -285px; margin-top: -275px; transition: all 0.2s ease; animation: corruptEnergyG 2s infinite;" alt="r" src="https://i.ibb.co/jk4n1ypY/corrupt-En.png">`
+                                                        newBlock.style.backgroundColor = "#b33c62"
+                                                    })
+
+                                                         }
+                                                         amountsCellsAdd++
+                                                 })
+                                             }, 700);
+                                     
+                                           })      
+
+                                })
+                            })
+                        })
+                    })
+             })
+        })
+
+        }, 2000);
+
+        
         }
-    })
+
+
+        
     function checkStorage() {
     const level = parseInt(localStorage.getItem("userLevelCODING"))
 
@@ -1269,6 +1552,26 @@ setTimeout(() => {
     }
     }
     checkStorage()
+
+
+    function blackOutDiv() {
+        
+        let divNode = document.createElement("div")
+            divNode.style = "width: 2%; background-color: rgb(0,0,0,0.99); height: 2%; position: absolute; transition: all 1s ease; opacity: 1;"
+            document.body.appendChild(divNode)
+            setTimeout(() => {
+                divNode.style.width = "100%"
+                divNode.style.height = "100%"
+            }, 100);
+            
+        setTimeout(() => {
+            divNode.style.opacity = "0"
+            setTimeout(() => {
+                divNode.remove()
+            }, 1000);
+        }, 2000);
+
+    }
 
 
   </script>
