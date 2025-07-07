@@ -687,7 +687,7 @@
                         }
                 }
                 else if(codeLine.trim() === codeGlossary.drain) {
-              function drain() {
+                   function drain() {
                 document.querySelectorAll(".backgroundCellDiv").forEach(div => {
                   if(div.getAttribute("id") == currentPosition) {
                      const child = div.firstElementChild;
@@ -700,7 +700,7 @@
                  }
                   });
                }
-               drain()
+                 drain()
             }
              }         
               
@@ -709,6 +709,20 @@
                 let ifCondition = codeLine.split("(")[1].replaceAll(' ', '')
                 async function allFunctions(insideLine) {
                             if(insideLine === "drain()") {
+                                function drain() {
+                                    document.querySelectorAll(".backgroundCellDiv").forEach(div => {
+                                    if(div.getAttribute("id") == currentPosition) {
+                                        const child = div.firstElementChild;
+                                        if (child) {
+                                        if(child.getAttribute("src") == "https://i.ibb.co/jk4n1ypY/corrupt-En.png") {
+                                        child.style.display = "none";
+                                        div.style.backgroundColor = "rgb(85, 161, 78)"
+                                        }
+                                    }
+                                    }
+                                });
+                            }
+
                             drain()
                             }
                             else if(insideLine.startsWith("step(") && insideLine.endsWith(")")) {
@@ -741,23 +755,25 @@
                          let insideLine = codeLines[k].trim()
                          if(insideLine == "}") {
                             break;
-                        }                     
-                         allFunctions(codeLines[i +1].trim())
-                         await sleep2(150)
+                        }             
+                        for(let l = 1; l<50; l++) {
+                            if(codeLines[i + l].trim() != "}") {
+                                allFunctions(codeLines[i + l].trim())
+                                await sleep2(150)
+                            }
+                            else {
+                                break;
+                            }
+                        }        
                          k = k + 1
 
                         }
                         }
-                          
-                        else {
-                             alert("d")
-                        }
-                    }
-                    else {
-                        alert("f")
-                    }
+                       
+                    }              
                        
                     }
+                
             }          
               console.log(currentPosition)
         
